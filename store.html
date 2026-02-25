@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pankaj Kumar Ratrey Store</title>
+
+<style>
+
+/* ===== Cute Background ===== */
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4,#a18cd1);
+    background-size:400% 400%;
+    animation:bgmove 10s infinite alternate;
+    text-align:center;
+}
+
+@keyframes bgmove{
+    0%{background-position:left;}
+    100%{background-position:right;}
+}
+
+h1{
+    color:white;
+    text-shadow:2px 2px 5px black;
+}
+
+/* ===== Product Card ===== */
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.card{
+    background:white;
+    width:260px;
+    margin:15px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.price{
+    font-size:20px;
+    color:#ff4081;
+    font-weight:bold;
+}
+
+/* ===== Buttons ===== */
+button{
+    border:none;
+    padding:10px 18px;
+    margin:5px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.pay{
+    background:#673ab7;
+    color:white;
+}
+
+.video{
+    background:#ff4081;
+    color:white;
+}
+
+/* ===== QR Section ===== */
+#payment{
+    display:none;
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+
+input{
+    padding:10px;
+    width:80%;
+    margin:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.verify{
+    background:green;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>✨ Pankaj Kumar Ratrey Store ✨</h1>
+
+<div class="container">
+
+<!-- PANEL -->
+<div class="card">
+<h3>Panels</h3>
+<p class="price">₹30</p>
+<button class="pay" onclick="showPayment()">Pay Now</button>
+<button class="video" onclick="openVideo()">Watch Demo</button>
+</div>
+
+<!-- VPN FILE -->
+<div class="card">
+<h3>VPN Files</h3>
+<p class="price">₹30</p>
+<button class="pay" onclick="showPayment()">Pay Now</button>
+<button class="video" onclick="openVideo()">Watch Demo</button>
+</div>
+
+<!-- ITI QUESTIONS -->
+<div class="card">
+<h3>Important ITI Questions</h3>
+<p class="price">₹30</p>
+<button class="pay" onclick="showPayment()">Pay Now</button>
+<button class="video" onclick="openVideo()">Watch Demo</button>
+</div>
+
+<!-- STUDY MATERIAL -->
+<div class="card">
+<h3>Study Materials</h3>
+<p class="price">₹30</p>
+<button class="pay" onclick="showPayment()">Pay Now</button>
+<button class="video" onclick="openVideo()">Watch Demo</button>
+</div>
+
+</div>
+
+<!-- PAYMENT SECTION -->
+<div id="payment">
+<h2>Scan & Pay ₹30</h2>
+
+<!-- Replace with your QR image name -->
+<img src="phonepe_qr.png" width="220">
+
+<p>After payment, enter transaction ID</p>
+
+<input type="text" placeholder="Enter Transaction ID">
+
+<br>
+<button class="verify" onclick="verify()">Verify Payment</button>
+
+<p id="result"></p>
+</div>
+
+<script>
+
+function showPayment(){
+    document.getElementById("payment").style.display="block";
+    window.scrollTo(0,document.body.scrollHeight);
+}
+
+function openVideo(){
+    // replace with your youtube or demo link
+    window.open("https://youtube.com","_blank");
+}
+
+function verify(){
+    document.getElementById("result").innerHTML =
+    "✅ Payment request submitted! Admin will verify soon.";
+}
+
+</script>
+
+</body>
+</html>
