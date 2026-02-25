@@ -1,223 +1,187 @@
-<img src="panel.jpg" alt="Pro Gaming Panels" width="300">
-<img src="vpn.jpg" alt="Dark Tunnel VPN" width="300">
-<img src="iti.jpg" alt="ITI Important Questions" width="300">
-<img src="tools.jpg" alt="Useful Tools" width="300">
-<img src="video.jpg" alt="Video Collection" width="300">
-<img src="free_vpn.png" alt="Free VPN Trial" width="300"><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj ITI Digital Store</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-<h1>🎓 Pankaj ITI Digital Store</h1>
-<p>All digital products in one place! Gaming, VPN, Study, Tools & Videos</p>
-</header>
-
-<main>
-<div class="container">
-
-<!-- Product Card 1 -->
-<div class="card">
-<img src="panel.jpg" alt="Free Fire Panel">
-<h2>🎮 Free Fire Panels & Sensitivity</h2>
-<p>Pro gaming panels and sensitivity settings</p>
-<p>💰 ₹30</p>
-<a href="payment.html" class="btn">Buy Now</a>
-</div>
-
-<!-- Product Card 2 -->
-<div class="card">
-<img src="vpn.jpg" alt="VPN File">
-<h2>🌐 Dark Tunnel VPN</h2>
-<p>Secure and fast VPN configs</p>
-<p>💰 ₹7</p>
-<a href="payment.html" class="btn">Buy Now</a>
-</div>
-
-<!-- Product Card 3 -->
-<div class="card">
-<img src="iti.jpg" alt="ITI Questions">
-<h2>📘 ITI Important Questions</h2>
-<p>Study material for ITI exams</p>
-<p>💰 ₹20</p>
-<a href="payment.html" class="btn">Buy Now</a>
-</div>
-
-<!-- Product Card 4 -->
-<div class="card">
-<img src="tools.jpg" alt="Tools">
-<h2>🧰 Useful Tools</h2>
-<p>Various helpful digital tools</p>
-<p>💰 ₹30</p>
-<a href="payment.html" class="btn">Buy Now</a>
-</div>
-
-<!-- Product Card 5 -->
-<div class="card">
-<img src="video.jpg" alt="Videos">
-<h2>🎬 Video Collection</h2>
-<p>Sample entertaining & romantic videos</p>
-<a href="#" class="btn">Preview</a>
-</div>
-
-<!-- Free Trial -->
-<div class="card">
-<img src="free_vpn.png" alt="Free VPN">
-<h2>🆓 Free VPN Trial</h2>
-<p>Download free sample file</p>
-<a href="free_vpn.zip" class="btn">Download Free</a>
-</div>
-
-</div>
-</main>
-
-<footer>
-<p>⭐ Pankaj Kumar Ratrey — ITI Student | UPI: pankajratrey7@axl</p>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-<title>Pankaj ITI Knowledge Hub</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pankaj Digital Store</title>
 
 <style>
-
 body{
-    margin:0;
-    font-family: Arial;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    text-align:center;
+margin:0;
+font-family:Arial;
+background:#0b0f1a;
+color:white;
 }
 
 /* HEADER */
 header{
-    padding:40px;
-    font-size:32px;
-    font-weight:bold;
-    background:rgba(0,0,0,0.4);
-    box-shadow:0 0 20px cyan;
+background:#111827;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:22px;
 }
 
-/* 3D CARD DESIGN */
-.container{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:25px;
-    padding:40px;
+/* HERO SECTION */
+.hero{
+height:420px;
+background:linear-gradient(45deg,#020024,#090979,#00d4ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:45px;
+font-weight:bold;
+}
+
+/* CATEGORY BAR */
+.categories{
+display:flex;
+justify-content:center;
+gap:30px;
+padding:20px;
+background:#111;
+}
+
+.cat{
+background:#1f2937;
+padding:15px 25px;
+border-radius:12px;
+}
+
+/* PRODUCT GRID */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+padding:40px;
 }
 
 .card{
-    width:280px;
-    padding:25px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    box-shadow:0 10px 30px rgba(0,255,255,0.4);
-    transition:0.4s;
+background:#111827;
+border-radius:20px;
+padding:20px;
+text-align:center;
+transition:0.3s;
+box-shadow:0 0 15px #00ffff33;
 }
 
 .card:hover{
-    transform:scale(1.08) rotateY(8deg);
-    box-shadow:0 0 30px cyan;
+transform:scale(1.05);
+box-shadow:0 0 25px #00ffffaa;
 }
 
-h2{
-    font-size:22px;
+.card img{
+width:100%;
+border-radius:15px;
 }
 
-/* BUTTON */
-.btn{
-    display:block;
-    margin-top:15px;
-    padding:12px;
-    border-radius:30px;
-    background:linear-gradient(45deg,#ff00cc,#3333ff);
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    box-shadow:0 0 15px pink;
+.price{
+color:#00ffff;
+font-size:22px;
+margin:10px;
 }
 
-.btn:hover{
-    background:linear-gradient(45deg,#00ffd5,#0072ff);
+button{
+background:#00ffff;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* REVIEW SECTION */
+.reviews{
+background:#111;
+padding:40px;
+text-align:center;
 }
 
 /* FOOTER */
 footer{
-    margin-top:40px;
-    padding:20px;
-    background:black;
+background:#020617;
+text-align:center;
+padding:20px;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-👨‍🔧 Pankaj Kumar Ratrey — ITI Knowledge Hub 🚀
-<br>
-<span style="font-size:18px;">Digital Files • Study Materials • VPN • Tools</span>
+<div>🚀 Pankaj Digital Store</div>
+<div>ITI Student Marketplace</div>
 </header>
 
-<div class="container">
+<div class="hero">
+🔥 Digital Products Store 🔥
+</div>
+
+<!-- Categories -->
+<div class="categories">
+<div class="cat">🎮 Gaming Panels</div>
+<div class="cat">🌐 VPN Files</div>
+<div class="cat">📘 ITI Study</div>
+<div class="cat">🧰 Tools</div>
+<div class="cat">🎬 Videos</div>
+</div>
+
+<!-- Products -->
+<div class="products">
 
 <div class="card">
-<h2>🎮 Free Fire Panels & Sensitivity</h2>
-<p>Best gaming panels & pro sensitivity files.</p>
-<p>💰 Price: ₹30</p>
-<a class="btn" href="payment.html">Buy Now</a>
+<img src="panel.jpg">
+<h2>Free Fire Panels</h2>
+<p class="price">₹30</p>
+<button>Buy Now</button>
 </div>
 
 <div class="card">
-<h2>🌐 Dark Tunnel VPN</h2>
-<p>Secure internet & premium VPN configs.</p>
-<p>💰 Price: ₹7</p>
-<a class="btn" href="payment.html">Buy VPN</a>
+<img src="vpn.jpg">
+<h2>Dark Tunnel VPN</h2>
+<p class="price">₹7</p>
+<button>Buy Now</button>
 </div>
 
 <div class="card">
-<h2>📘 ITI Important Questions</h2>
-<p>Important exam questions for ITI students.</p>
-<p>💰 Price: ₹20</p>
-<a class="btn" href="payment.html">Get Study Pack</a>
+<img src="iti.jpg">
+<h2>ITI Important Questions</h2>
+<p class="price">₹20</p>
+<button>Buy Now</button>
 </div>
 
 <div class="card">
-<h2>🧰 Useful Tools</h2>
-<p>Helpful digital tools & files.</p>
-<p>💰 Price: ₹30</p>
-<a class="btn" href="payment.html">Download Tools</a>
+<img src="tools.jpg">
+<h2>Useful Tools Pack</h2>
+<p class="price">₹30</p>
+<button>Buy Now</button>
 </div>
 
 <div class="card">
-<h2>🎬 Video Collection</h2>
-<p>Best entertaining & romantic videos collection.</p>
-<a class="btn" href="#">Open Videos</a>
+<img src="video.jpg">
+<h2>Premium Video Collection</h2>
+<p class="price">₹30</p>
+<button>Buy Now</button>
 </div>
 
 <div class="card">
-<h2>🆓 Free Trial Files</h2>
-<p>Try free VPN & sample files.</p>
-<a class="btn" href="free_vpn.zip">Download Free</a>
+<img src="free_vpn.png">
+<h2>Free VPN Trial</h2>
+<p class="price">FREE</p>
+<button>Download</button>
 </div>
 
+</div>
+
+<!-- Reviews -->
+<div class="reviews">
+<h2>⭐ Customer Reviews</h2>
+<p>⭐⭐⭐⭐⭐ Best VPN and study materials!</p>
+<p>⭐⭐⭐⭐ Fast delivery and working panels.</p>
+<p>⭐⭐⭐⭐⭐ Very helpful for ITI students.</p>
 </div>
 
 <footer>
-⭐ Powered by Pankaj ITI Student Website<br>
-UPI: pankajratrey7@axl
+© 2026 Pankaj Kumar Ratrey | Digital Store
 </footer>
 
 </body>
