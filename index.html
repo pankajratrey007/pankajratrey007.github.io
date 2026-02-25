@@ -1,77 +1,140 @@
-<div class="card">
-<h2>💰 Buy Premium Product - ₹99</h2>
-
-<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj%20Kumar&am=99&cu=INR">
-<button style="padding:15px;background:green;color:white;border:none;border-radius:8px;">
-Pay ₹99 via UPI
-</button>
-</a>
-
-<h3>OR Scan QR Code</h3>
-
-<img src="phonepe_qr.png" width="220">
-
-<p>UPI: pankajratrey7@axl</p>
-</div><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
+<title>Pankaj ITI Knowledge Hub</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pankaj Knowledge Hub</title>
 
 <style>
+
 body{
-  margin:0;
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
-  text-align:center;
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
 }
 
+/* HEADER */
 header{
-  background:linear-gradient(45deg,#2563eb,#06b6d4);
-  padding:40px;
+    padding:40px;
+    font-size:32px;
+    font-weight:bold;
+    background:rgba(0,0,0,0.4);
+    box-shadow:0 0 20px cyan;
+}
+
+/* 3D CARD DESIGN */
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+    padding:40px;
 }
 
 .card{
-  background:#1e293b;
-  margin:20px auto;
-  padding:20px;
-  border-radius:12px;
-  width:90%;
-  max-width:400px;
+    width:280px;
+    padding:25px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 30px rgba(0,255,255,0.4);
+    transition:0.4s;
 }
 
-button{
-  background:#22c55e;
-  border:none;
-  padding:12px 20px;
-  color:white;
-  font-size:16px;
-  border-radius:8px;
+.card:hover{
+    transform:scale(1.08) rotateY(8deg);
+    box-shadow:0 0 30px cyan;
 }
+
+h2{
+    font-size:22px;
+}
+
+/* BUTTON */
+.btn{
+    display:block;
+    margin-top:15px;
+    padding:12px;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff00cc,#3333ff);
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 0 15px pink;
+}
+
+.btn:hover{
+    background:linear-gradient(45deg,#00ffd5,#0072ff);
+}
+
+/* FOOTER */
+footer{
+    margin-top:40px;
+    padding:20px;
+    background:black;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>🚀 Pankaj Knowledge Hub</h1>
-<p>Learn Skills • Download Guides</p>
+👨‍🔧 Pankaj Kumar Ratrey — ITI Knowledge Hub 🚀
+<br>
+<span style="font-size:18px;">Digital Files • Study Materials • VPN • Tools</span>
 </header>
 
-<div class="card">
-<h2>📘 Programming Guide</h2>
-<p>Beginner coding & Termux learning guide.</p>
+<div class="container">
 
-<button onclick="payUPI()">Pay ₹99 via UPI</button>
+<div class="card">
+<h2>🎮 Free Fire Panels & Sensitivity</h2>
+<p>Best gaming panels & pro sensitivity files.</p>
+<p>💰 Price: ₹30</p>
+<a class="btn" href="payment.html">Buy Now</a>
 </div>
 
-<script>
-function payUPI(){
- window.location.href=
- "upi://pay?pa=ispankajratrey7@axl&pn=Pankaj&cu=INR";
-}
-</script>
+<div class="card">
+<h2>🌐 Dark Tunnel VPN</h2>
+<p>Secure internet & premium VPN configs.</p>
+<p>💰 Price: ₹7</p>
+<a class="btn" href="payment.html">Buy VPN</a>
+</div>
+
+<div class="card">
+<h2>📘 ITI Important Questions</h2>
+<p>Important exam questions for ITI students.</p>
+<p>💰 Price: ₹20</p>
+<a class="btn" href="payment.html">Get Study Pack</a>
+</div>
+
+<div class="card">
+<h2>🧰 Useful Tools</h2>
+<p>Helpful digital tools & files.</p>
+<p>💰 Price: ₹30</p>
+<a class="btn" href="payment.html">Download Tools</a>
+</div>
+
+<div class="card">
+<h2>🎬 Video Collection</h2>
+<p>Best entertaining & romantic videos collection.</p>
+<a class="btn" href="#">Open Videos</a>
+</div>
+
+<div class="card">
+<h2>🆓 Free Trial Files</h2>
+<p>Try free VPN & sample files.</p>
+<a class="btn" href="free_vpn.zip">Download Free</a>
+</div>
+
+</div>
+
+<footer>
+⭐ Powered by Pankaj ITI Student Website<br>
+UPI: pankajratrey7@axl
+</footer>
 
 </body>
 </html>
