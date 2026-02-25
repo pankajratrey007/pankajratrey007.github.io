@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Verification</title>
+<style>
+body{background:#0f2027;color:white;font-family:Arial;text-align:center;padding:50px;}
+input{padding:10px;margin:10px;border-radius:10px;border:none;width:80%;}
+button{padding:15px;margin:20px;border:none;border-radius:20px;background:linear-gradient(45deg,#ff00cc,#3333ff);color:white;font-weight:bold;}
+button:hover{background:linear-gradient(45deg,#00ffd5,#0072ff);}
+</style>
+</head>
+<body>
+<h1>Payment Verification</h1>
+<p>Send your payment screenshot and info</p>
+
+<form action="https://formsubmit.co/bb8800431@gmail.com" method="POST">
+<input type="text" name="Name" placeholder="Your Name" required><br>
+<input type="text" name="Product" placeholder="Product Name" required><br>
+<input type="text" name="Transaction" placeholder="Transaction ID / UPI ID" required><br>
+<input type="hidden" name="_captcha" value="false">
+<button type="submit">Submit Verification</button>
+</form>
+</body>
+</html>
