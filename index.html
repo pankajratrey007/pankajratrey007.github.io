@@ -1,118 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Pankaj Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pankaj Digital Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+
+*{
 margin:0;
-font-family:Arial;
-background:black;
-color:white;
-background-image:url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
-background-size:cover;
-background-attachment:fixed;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
 }
 
-header{
-background:rgba(0,0,0,0.8);
-padding:20px;
-text-align:center;
-font-size:28px;
-color:#00ffcc;
+/* ===== Animated Background ===== */
+body{
+height:100vh;
+color:white;
+background:black;
+overflow-x:hidden;
 }
+
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:
+radial-gradient(circle,#00ffee22,transparent),
+radial-gradient(circle,#ff00ff22,transparent),
+radial-gradient(circle,#00ff8822,transparent);
+animation:bgMove 20s linear infinite;
+z-index:-1;
+}
+
+@keyframes bgMove{
+0%{transform:translate(-10%,-10%) rotate(0deg);}
+100%{transform:translate(-10%,-10%) rotate(360deg);}
+}
+
+/* ===== Header ===== */
+
+header{
+text-align:center;
+padding:30px;
+font-size:32px;
+color:#00ffee;
+text-shadow:0 0 20px #00ffee;
+animation:fadeIn 2s ease;
+}
+
+/* ===== Grid Layout ===== */
 
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-padding:30px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+padding:40px;
 }
+
+/* ===== 3D Cards ===== */
 
 .card{
 background:rgba(0,0,0,0.7);
-border-radius:15px;
+border-radius:20px;
 padding:20px;
 text-align:center;
-box-shadow:0 0 20px #00ffcc;
-transition:0.3s;
+transition:0.4s;
+transform-style:preserve-3d;
+box-shadow:0 0 25px #00ffee44;
+animation:fadeUp 1s ease;
 }
 
 .card:hover{
-transform:scale(1.05);
+transform:rotateY(10deg) scale(1.07);
+box-shadow:0 0 40px #00ffee;
 }
 
-img{
+.card img{
 width:100%;
-border-radius:10px;
+border-radius:15px;
+margin-bottom:15px;
 }
+
+h3{
+margin-bottom:10px;
+color:#00ffee;
+}
+
+p{
+font-size:14px;
+opacity:0.8;
+}
+
+/* ===== Buttons ===== */
 
 button{
-margin-top:10px;
-padding:10px;
+margin-top:15px;
+padding:12px 20px;
 border:none;
-background:#00ffcc;
+border-radius:10px;
+background:linear-gradient(45deg,#00ffee,#ff00ff);
 color:black;
 font-weight:bold;
-border-radius:8px;
 cursor:pointer;
+transition:0.3s;
 }
+
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #00ffee;
+}
+
+/* ===== Animations ===== */
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(50px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+/* ===== Footer ===== */
 
 footer{
 text-align:center;
-padding:20px;
+padding:25px;
 background:black;
+margin-top:40px;
+color:#00ffee;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-🔥 Pankaj Digital
- Mod Store
+⚡ GOD MODE DIGITAL STORE ⚡
 </header>
 
 <div class="container">
 
 <div class="card">
 <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
-<h3>Free Fire Sensitivity</h3>
-<p>Best Pro Settings</p>
-<button onclick="buy()">Buy Now</button>
+<h3>🔥 Free Fire Sensitivity</h3>
+<p>Pro Player Settings Panel</p>
+<button onclick="buy()">BUY NOW</button>
 </div>
 
 <div class="card">
 <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
-<h3>Dark Tunnel VPN</h3>
-<p>Fast & Secure VPN</p>
-<button onclick="buy()">Buy Now</button>
+<h3>🌑 Dark Tunnel VPN</h3>
+<p>Ultra Secure VPN Files</p>
+<button onclick="buy()">BUY NOW</button>
 </div>
 
 <div class="card">
 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
-<h3>ITI Questions</h3>
-<p>Important Study Material</p>
-<button onclick="buy()">Buy Now</button>
+<h3>📘 ITI Important Questions</h3>
+<p>Exam Booster Materials</p>
+<button onclick="buy()">BUY NOW</button>
 </div>
 
 <div class="card">
 <img src="https://cdn-icons-png.flaticon.com/512/3523/3523887.png">
-<h3>Premium Tools</h3>
-<p>Useful Tools Collection</p>
-<button onclick="buy()">Buy Now</button>
+<h3>🛠 Premium Tools</h3>
+<p>Useful Digital Tools Pack</p>
+<button onclick="buy()">BUY NOW</button>
 </div>
 
 </div>
 
 <footer>
-Contact Support: cgpolishkorba@gmail.com
+Contact Support ✉ cgpolishkorba@gmail.com
 </footer>
 
 <script>
+
 function buy(){
-alert("Payment system coming soon!");
+alert("Payment system will open here soon!");
 }
+
 </script>
 
 </body>
