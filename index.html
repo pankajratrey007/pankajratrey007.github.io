@@ -1,146 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj Digital Store</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<title>Pankaj Digital Store</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
-}
-
-/* ===== Animated Background ===== */
 body{
-height:100vh;
-color:white;
+margin:0;
+font-family:Arial;
 background:black;
-overflow-x:hidden;
+color:white;
+background-image:
+radial-gradient(circle at top,#00ffcc22,transparent),
+url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
+background-size:cover;
 }
 
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background:
-radial-gradient(circle,#00ffee22,transparent),
-radial-gradient(circle,#ff00ff22,transparent),
-radial-gradient(circle,#00ff8822,transparent);
-animation:bgMove 20s linear infinite;
-z-index:-1;
-}
-
-@keyframes bgMove{
-0%{transform:translate(-10%,-10%) rotate(0deg);}
-100%{transform:translate(-10%,-10%) rotate(360deg);}
-}
-
-/* ===== Header ===== */
-
+/* HEADER */
 header{
+background:#000000cc;
+padding:20px;
 text-align:center;
-padding:30px;
-font-size:32px;
-color:#00ffee;
-text-shadow:0 0 20px #00ffee;
-animation:fadeIn 2s ease;
+font-size:28px;
+color:#00ffd5;
+box-shadow:0 0 20px #00ffd5;
 }
 
-/* ===== Grid Layout ===== */
-
+/* GRID */
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:30px;
 padding:40px;
 }
 
-/* ===== 3D Cards ===== */
-
+/* CARD */
 .card{
-background:rgba(0,0,0,0.7);
+background:#111;
 border-radius:20px;
 padding:20px;
 text-align:center;
+box-shadow:0 0 25px #00ffd580;
 transition:0.4s;
-transform-style:preserve-3d;
-box-shadow:0 0 25px #00ffee44;
-animation:fadeUp 1s ease;
 }
 
 .card:hover{
-transform:rotateY(10deg) scale(1.07);
-box-shadow:0 0 40px #00ffee;
+transform:scale(1.05);
+box-shadow:0 0 40px #00ffd5;
 }
 
 .card img{
 width:100%;
 border-radius:15px;
-margin-bottom:15px;
 }
 
-h3{
-margin-bottom:10px;
-color:#00ffee;
-}
-
-p{
-font-size:14px;
-opacity:0.8;
-}
-
-/* ===== Buttons ===== */
-
+/* BUTTON */
 button{
-margin-top:15px;
-padding:12px 20px;
+padding:12px 25px;
 border:none;
-border-radius:10px;
-background:linear-gradient(45deg,#00ffee,#ff00ff);
-color:black;
-font-weight:bold;
+border-radius:30px;
+background:linear-gradient(45deg,#00ffd5,#0066ff);
+color:white;
+font-size:16px;
 cursor:pointer;
-transition:0.3s;
+margin-top:10px;
 }
 
 button:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #00ffee;
+box-shadow:0 0 20px #00ffd5;
 }
 
-/* ===== Animations ===== */
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(50px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+/* FORM */
+form{
+margin-top:15px;
 }
 
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
+input{
+padding:10px;
+margin:6px;
+border-radius:10px;
+border:none;
+width:80%;
 }
 
-/* ===== Footer ===== */
-
+/* FOOTER */
 footer{
 text-align:center;
-padding:25px;
-background:black;
+padding:20px;
+background:#000000cc;
 margin-top:40px;
-color:#00ffee;
 }
 
 </style>
@@ -149,52 +100,80 @@ color:#00ffee;
 <body>
 
 <header>
-⚡ GOD MODE DIGITAL STORE ⚡
+🔥 PANKAJ DIGITAL HACKER STORE 🔥
+<br>
+<small>ITI Student Digital Marketplace</small>
 </header>
 
 <div class="container">
 
+<!-- VPN -->
 <div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
-<h3>🔥 Free Fire Sensitivity</h3>
-<p>Pro Player Settings Panel</p>
-<button onclick="buy()">BUY NOW</button>
-</div>
+<img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31">
+<h2>🌐 VPN Files</h2>
+<p>Secure Dark Tunnel VPN Config</p>
+<h3>₹7</h3>
 
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
-<h3>🌑 Dark Tunnel VPN</h3>
-<p>Ultra Secure VPN Files</p>
-<button onclick="buy()">BUY NOW</button>
-</div>
-
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
-<h3>📘 ITI Important Questions</h3>
-<p>Exam Booster Materials</p>
-<button onclick="buy()">BUY NOW</button>
-</div>
-
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/3523/3523887.png">
-<h3>🛠 Premium Tools</h3>
-<p>Useful Digital Tools Pack</p>
-<button onclick="buy()">BUY NOW</button>
-</div>
+<a href="upi://pay?pa=YOURUPI@upi&pn=PankajStore&am=7&cu=INR">
+<button>💳 Buy Now</button>
+</a>
 
 </div>
+
+<!-- ITI QUESTIONS -->
+<div class="card">
+<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
+<h2>📘 ITI Important Questions</h2>
+<p>Exam Preparation Materials</p>
+<h3>₹20</h3>
+
+<a href="upi://pay?pa=YOURUPI@upi&pn=PankajStore&am=20&cu=INR">
+<button>💳 Buy Now</button>
+</a>
+
+</div>
+
+<!-- PANELS -->
+<div class="card">
+<img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769">
+<h2>🎮 FF Panels & Sensitivity</h2>
+<p>Pro Gamer Settings</p>
+<h3>₹30</h3>
+
+<a href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=30&cu=INR">
+<button>💳 Buy Now</button>
+</a>
+
+</div>
+
+</div>
+
+<!-- PAYMENT VERIFY -->
+<center>
+
+<h2>✅ Payment Verification</h2>
+
+<form action="https://formsubmit.co/cgpolishkorba@gmail.com"
+method="POST"
+enctype="multipart/form-data">
+
+<input type="text" name="name" placeholder="Your Name" required><br>
+<input type="number" name="amount" placeholder="Amount Paid" required><br>
+<input type="file" name="attachment" required><br>
+
+<button type="submit">Submit Payment Screenshot</button>
+
+</form>
+
+<p>⚡ Download link sent after verification (5-10 min)</p>
+
+</center>
 
 <footer>
-Contact Support ✉ cgpolishkorba@gmail.com
+Contact Support 📧 cgpolishkorba@gmail.com
+<br><br>
+© 2026 Pankaj Digital Store
 </footer>
-
-<script>
-
-function buy(){
-alert("Payment system will open here soon!");
-}
-
-</script>
 
 </body>
 </html>
