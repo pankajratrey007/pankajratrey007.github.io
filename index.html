@@ -1,255 +1,178 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Pankaj Hacker Digital Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pankaj Digital Store</title>
+
 <style>
 body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#0b0f1a;
-  color:white;
+margin:0;
+font-family:Arial;
+background:linear-gradient(120deg,#020024,#090979,#000);
+color:white;
+overflow-x:hidden;
 }
 
-/* HEADER */
+/* glowing background */
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://cdn.jsdelivr.net/gh/JulianLaval/canvas-particle-network/particle.png");
+opacity:0.15;
+z-index:-1;
+}
+
+/* header */
 header{
-  background:#111827;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:22px;
+background:#000000aa;
+padding:20px;
+text-align:center;
+font-size:28px;
+color:#00ffff;
+box-shadow:0 0 20px cyan;
 }
 
-/* HERO + Blossom Animation */
-.hero{
-  height:450px;
-  background:linear-gradient(45deg,#000,#020024,#090979);
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  font-size:45px;
-  font-weight:bold;
-  text-shadow:2px 2px 15px #000;
-}
-
-/* Animated blossoms */
-.blossom{
-  width:20px;
-  height:20px;
-  background:#ff00ff;
-  border-radius:50%;
-  position:absolute;
-  animation:moveBlossom 8s infinite;
-  box-shadow:0 0 15px #ff00ff, 0 0 25px #00ffff;
-}
-
-@keyframes moveBlossom{
-  0%{top:100%; left:10%;}
-  25%{top:70%; left:30%;}
-  50%{top:40%; left:60%;}
-  75%{top:70%; left:80%;}
-  100%{top:100%; left:50%;}
-}
-
-/* CATEGORY BAR */
-.categories{
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  padding:20px;
-  background:#111;
-}
-.cat{
-  background:#1f2937;
-  padding:15px 25px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.cat:hover{
-  background:#00ffff;
-  color:#111;
-}
-
-/* PRODUCT GRID */
+/* products grid */
 .products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:40px;
-  padding:40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+padding:40px;
 }
+
+/* product card */
 .card{
-  background:#111827;
-  border-radius:20px;
-  padding:25px;
-  text-align:center;
-  box-shadow:0 0 15px #00ffff33;
-  transition:0.3s;
+background:#111827;
+border-radius:20px;
+padding:25px;
+text-align:center;
+transition:0.4s;
+box-shadow:0 0 15px #00ffff44;
 }
+
 .card:hover{
-  transform:scale(1.07);
-  box-shadow:0 0 30px #00ffffaa;
+transform:translateY(-10px) scale(1.05);
+box-shadow:0 0 35px #00ffff;
 }
-.card .icon{
-  font-size:80px;
+
+.icon{
+font-size:70px;
 }
+
 .price{
-  color:#00ffff;
-  font-size:22px;
-  margin:10px;
+font-size:22px;
+color:#00ffff;
+margin:10px;
 }
+
 button{
-  background:#00ffff;
-  border:none;
-  padding:15px 25px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:bold;
-  transition:0.3s;
+background:#00ffff;
+border:none;
+padding:15px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+width:90%;
 }
+
 button:hover{
-  background:#00bcd4;
-  box-shadow:0 0 15px #00ffff;
+background:#00bcd4;
 }
 
-/* PAYMENT SECTION */
-.payments{
-  background:#111;
-  text-align:center;
-  padding:30px;
-  border-radius:20px;
-  margin:50px auto;
-  width:90%;
-  box-shadow:0 0 20px #00ffff55;
-}
-.pay-option{
-  padding:15px;
-  margin:10px;
-  background:#1f2937;
-  border-radius:12px;
-  display:inline-block;
-  font-size:20px;
-  transition:0.3s;
-  cursor:pointer;
-}
-.pay-option:hover{
-  background:#00ffff;
-  color:#111;
-  box-shadow:0 0 15px #00ffff;
+/* AI helper */
+#ai{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#111;
+padding:15px;
+border-radius:15px;
+box-shadow:0 0 20px cyan;
+width:220px;
 }
 
-/* REVIEWS */
-.reviews{
-  background:#111;
-  padding:40px;
-  text-align:center;
-}
-
-/* FOOTER */
-footer{
-  background:#020617;
-  text-align:center;
-  padding:20px;
-  font-size:14px;
+/* contact */
+.contact{
+text-align:center;
+padding:30px;
+background:#000;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <div>🚀 Pankaj Hacker Store</div>
-  <div>ITI Student Marketplace</div>
+🚀 Pankaj Kumar Ratrey Digital Store
 </header>
 
-<div class="hero">
-  🔥 Digital Products Store 🔥
-  <!-- Blossoms -->
-  <div class="blossom"></div>
-  <div class="blossom"></div>
-  <div class="blossom"></div>
-</div>
-
-<div class="categories">
-  <div class="cat">🎮 Free Fire Panels</div>
-  <div class="cat">🌐 VPN Files</div>
-  <div class="cat">📘 ITI Questions</div>
-  <div class="cat">🧰 Tools</div>
-  <div class="cat">🎬 Videos</div>
-</div>
-
 <div class="products">
-  <div class="card">
-    <div class="icon">🎮</div>
-    <h2>Free Fire Panels</h2>
-    <p class="price">₹30</p>
-    <p>📝 3 Panels included</p>
-    <button onclick="buy('Free Fire Panels')">Buy Now</button>
-  </div>
 
-  <div class="card">
-    <div class="icon">🌐</div>
-    <h2>Dark Tunnel VPN</h2>
-    <p class="price">₹7</p>
-    <p>🛡️ 1 Month Access</p>
-    <button onclick="buy('Dark Tunnel VPN')">Buy Now</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">📘</div>
-    <h2>ITI Important Questions</h2>
-    <p class="price">₹20</p>
-    <p>📝 Covers all ITI subjects</p>
-    <button onclick="buy('ITI Important Questions')">Buy Now</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">🧰</div>
-    <h2>Useful Tools Pack</h2>
-    <p class="price">₹30</p>
-    <p>⚙️ Handy utilities</p>
-    <button onclick="buy('Useful Tools Pack')">Buy Now</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">🎬</div>
-    <h2>Premium Video Collection</h2>
-    <p class="price">₹30</p>
-    <p>🎥 Tutorials & Entertainment</p>
-    <button onclick="buy('Premium Video Collection')">Buy Now</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">🌐</div>
-    <h2>Free VPN Trial</h2>
-    <p class="price">FREE</p>
-    <p>⏳ Limited time trial</p>
-    <button onclick="buy('Free VPN Trial')">Download</button>
-  </div>
+<div class="card">
+<div class="icon">🎮</div>
+<h2>Free Fire Panels</h2>
+<div class="price">₹30</div>
+<button onclick="pay('Free Fire Panels',30,'panels.zip')">
+Buy via PhonePe
+</button>
 </div>
 
-<div class="payments">
-  <h2>💰 Payment Options</h2>
-  <div class="pay-option">📱 PhonePe QR</div>
-  <div class="pay-option">💳 UPI ID: pankajratrey7@axl</div>
+<div class="card">
+<div class="icon">🌐</div>
+<h2>VPN Files</h2>
+<div class="price">₹7</div>
+<button onclick="pay('VPN Files',7,'free_vpn.zip')">
+Buy via PhonePe
+</button>
 </div>
 
-<div class="reviews">
-  <h2>⭐ Customer Reviews</h2>
-  <p>⭐⭐⭐⭐⭐ Best VPN and study materials!</p>
-  <p>⭐⭐⭐⭐ Fast delivery and working panels.</p>
-  <p>⭐⭐⭐⭐⭐ Very helpful for ITI students.</p>
+<div class="card">
+<div class="icon">📘</div>
+<h2>ITI Questions</h2>
+<div class="price">₹20</div>
+<button onclick="pay('ITI Questions',20,'iti_questions.zip')">
+Buy via PhonePe
+</button>
 </div>
 
-<footer>
-  © 2026 Pankaj Kumar Ratrey | Digital Hacker Store
-</footer>
+<div class="card">
+<div class="icon">🧰</div>
+<h2>Tools Pack</h2>
+<div class="price">₹30</div>
+<button onclick="pay('Tools Pack',30,'tools.zip')">
+Buy via PhonePe
+</button>
+</div>
+
+</div>
+
+<!-- AI Helper -->
+<div id="ai">
+🤖 <b>AI Help</b><br>
+Click Buy → Pay → Press “I Paid” → Download starts.
+</div>
+
+<div class="contact">
+📧 Support: cgpolishkorba@gmail.com
+</div>
 
 <script>
-function buy(product){
-  alert("✅ Payment verified for "+product+"! Download starting...");
+function pay(product,price,file){
+
+// open PhonePe UPI with amount
+let upi="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am="+price+"&cu=INR";
+
+window.location.href=upi;
+
+// after payment confirmation
+setTimeout(()=>{
+if(confirm("Did you complete payment for "+product+" ?")){
+window.location.href=file;
+}
+},8000);
+
 }
 </script>
 
