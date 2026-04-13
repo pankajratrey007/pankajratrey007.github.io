@@ -3,73 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Pankaj Ultra Store</title>
+<title>Pankaj GOD MODE</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Arial;
-color:white;
-overflow-x:hidden;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+background:black;
+color:#00ffcc;
+font-family:monospace;
+overflow:hidden;
 }
 
-/* PARTICLES */
-#particles-js{
+/* INTRO */
+#intro{
 position:fixed;
 width:100%;
 height:100%;
-z-index:-1;
+background:black;
+padding:20px;
+z-index:9999;
 }
 
-/* HEADER */
-header{
-background:#000000aa;
+/* SCAN */
+#scan{
+display:none;
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+color:#00ff00;
+text-align:center;
+padding-top:200px;
+z-index:9998;
+}
+
+/* MAIN */
+.main{
+display:none;
 padding:20px;
 text-align:center;
-font-size:28px;
-color:#00ffd5;
-box-shadow:0 0 20px #00ffd5;
 }
 
-/* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-padding:30px;
-}
-
-/* CARD */
-.card{
-background:#111111aa;
-border-radius:20px;
-padding:20px;
-text-align:center;
-box-shadow:0 0 25px #00ffd580;
-transition:0.4s;
-backdrop-filter:blur(10px);
-}
-
-.card:hover{
-transform:scale(1.05);
-box-shadow:0 0 40px #00ffd5;
-}
-
+/* BUTTON */
 button{
-padding:12px 25px;
+padding:12px;
+margin:10px;
 border:none;
 border-radius:30px;
-background:linear-gradient(45deg,#00ffd5,#0066ff);
+background:linear-gradient(45deg,#00ffff,#0066ff);
 color:white;
 cursor:pointer;
-margin-top:10px;
 }
 
-/* LOADING */
-#loader{
+/* FINGERPRINT */
+#finger{
+font-size:60px;
+margin-top:100px;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{opacity:0.5;}
+50%{opacity:1;}
+100%{opacity:0.5;}
+}
+
+/* ADMIN */
+#admin{
 display:none;
 position:fixed;
 top:0;
@@ -77,37 +78,10 @@ left:0;
 width:100%;
 height:100%;
 background:black;
-color:#00ffd5;
-font-size:25px;
+color:red;
 text-align:center;
-padding-top:200px;
-z-index:999;
-}
-
-/* CHATBOT */
-#chatbot{
-position:fixed;
-bottom:20px;
-right:20px;
-width:250px;
-background:#111;
-border-radius:15px;
-padding:10px;
-box-shadow:0 0 15px #00ffd5;
-}
-
-#chatbot input{
-width:100%;
-padding:8px;
-border:none;
-border-radius:10px;
-}
-
-#chatlog{
-height:120px;
-overflow:auto;
-font-size:12px;
-margin-bottom:5px;
+padding-top:100px;
+z-index:9999;
 }
 
 </style>
@@ -115,115 +89,100 @@ margin-bottom:5px;
 
 <body>
 
-<div id="particles-js"></div>
+<div id="intro"></div>
 
-<header>
-💀 PANKAJ ULTRA STORE 💀
-</header>
+<div id="scan">💻 Scanning System...<br>Decrypting Data...</div>
 
-<div class="container">
-
-<!-- DARK TUNNEL -->
-<div class="card">
-<h2>🌐 DARK TUNNEL</h2>
-<h3>₹3</h3>
-<button onclick="startProcess('vpn')">Buy Now</button>
+<div id="admin">
+<h1>💀 ADMIN PANEL</h1>
+<p>Secret Access Granted</p>
 </div>
 
-<!-- HTTP INJECTOR -->
-<div class="card">
-<h2>📡 HTTP INJECTOR</h2>
-<h3>₹3</h3>
-<button onclick="startProcess('http')">Buy Now</button>
-</div>
+<div id="finger">🖐</div>
 
-<!-- NETMOD -->
-<div class="card">
-<h2>⚡ NETMOD FILE</h2>
-<h3>₹3</h3>
-<button onclick="startProcess('netmod')">Buy Now</button>
-</div>
+<div class="main" id="mainUI">
+<h1>💀 PANKAJ GOD STORE 💀</h1>
+
+<button onclick="buy()">💳 Buy</button>
+<button onclick="voiceAI()">🎤 Talk AI</button>
+<button onclick="openLogin('dt')">🌐 Dark Tunnel</button>
+<button onclick="openLogin('http')">📡 HTTP Injector</button>
 
 </div>
-
-<!-- LOADER -->
-<div id="loader">⚡ Connecting to Secure Server...</div>
-
-<!-- CHATBOT -->
-<div id="chatbot">
-<div id="chatlog"></div>
-<input placeholder="Ask something..." onkeypress="chat(event)">
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <script>
 
-/* MAIN SYSTEM */
-function startProcess(type){
+/* INTRO TEXT */
+let txt="Initializing...\nBypassing Firewall...\nAccess Granted...";
+let i=0;
 
-// save file type
-localStorage.setItem("fileType", type);
-
-// open payment
-window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
-
-// fake loading
+function type(){
+if(i<txt.length){
+document.getElementById("intro").innerHTML+=txt.charAt(i);
+i++;
+setTimeout(type,30);
+}else{
 setTimeout(()=>{
-document.getElementById("loader").style.display="block";
+document.getElementById("intro").style.display="none";
+document.getElementById("finger").onclick=startScan;
+},1000);
+}
+}
+type();
+
+/* FINGERPRINT */
+function startScan(){
+document.getElementById("finger").style.display="none";
+document.getElementById("scan").style.display="block";
 
 setTimeout(()=>{
-goDownload();
+document.getElementById("scan").style.display="none";
+document.getElementById("mainUI").style.display="block";
 },3000);
-
-},2000);
 }
 
-/* DOWNLOAD REDIRECT */
-function goDownload(){
-let type = localStorage.getItem("fileType");
+/* VOICE AI */
+function voiceAI(){
+let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.start();
 
-if(type==="vpn"){
+recognition.onresult=function(e){
+let text=e.results[0][0].transcript.toLowerCase();
+alert("You said: "+text);
+
+if(text.includes("price")) alert("All files ₹3");
+if(text.includes("vpn")) alert("Dark Tunnel available");
+if(text.includes("help")) alert("Contact WhatsApp");
+};
+}
+
+/* PAYMENT */
+function buy(){
+window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
+}
+
+/* LOGIN */
+function openLogin(type){
+let u=prompt("Username");
+let p=prompt("Password");
+
+if(type==="dt" && u==="pankaj" && p==="1234"){
 window.location.href="vpn_config.dt.dark";
+return;
 }
 
-if(type==="http"){
+if(type==="http" && u==="pankaj" && p==="4321"){
 window.location.href="http_injector.ehi.ehi";
+return;
 }
 
-if(type==="netmod"){
-window.location.href="netmod_config.nm"; // if you add later
-}
+alert("Wrong login");
 }
 
-/* CHATBOT */
-function chat(e){
-if(e.key==="Enter"){
-let input=e.target.value.toLowerCase();
-let log=document.getElementById("chatlog");
-
-log.innerHTML+="<div>👤 "+input+"</div>";
-
-let reply="🤖 Buy file to continue";
-
-if(input.includes("price")) reply="💰 All files are ₹3 only";
-if(input.includes("vpn")) reply="🌐 Dark Tunnel available";
-if(input.includes("http")) reply="📡 HTTP Injector available";
-if(input.includes("help")) reply="📧 Contact: cgpolishkorba@gmail.com";
-
-log.innerHTML+="<div>"+reply+"</div>";
-
-e.target.value="";
-}
-}
-
-/* PARTICLES */
-particlesJS("particles-js",{
-"particles":{
-"number":{"value":60},
-"size":{"value":3},
-"move":{"speed":2},
-"line_linked":{"enable":true}
+/* SECRET ADMIN (hidden trick) */
+document.addEventListener("keydown",function(e){
+if(e.key==="A"){
+document.getElementById("admin").style.display="block";
 }
 });
 
