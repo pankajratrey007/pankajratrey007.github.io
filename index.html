@@ -13,8 +13,6 @@ margin:0;
 font-family:Arial;
 color:white;
 overflow-x:hidden;
-
-/* GRADIENT BACKGROUND */
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
 
@@ -67,9 +65,10 @@ border-radius:30px;
 background:linear-gradient(45deg,#00ffd5,#0066ff);
 color:white;
 cursor:pointer;
+margin-top:10px;
 }
 
-/* LOADING SCREEN */
+/* LOADING */
 #loader{
 display:none;
 position:fixed;
@@ -124,27 +123,30 @@ margin-bottom:5px;
 
 <div class="container">
 
+<!-- DARK TUNNEL -->
 <div class="card">
-<h2>🌐 VPN CONFIG</h2>
+<h2>🌐 DARK TUNNEL</h2>
 <h3>₹3</h3>
-<button onclick="startProcess()">Buy Now</button>
+<button onclick="startProcess('vpn')">Buy Now</button>
 </div>
 
+<!-- HTTP INJECTOR -->
 <div class="card">
-<h2>📡 HTTP CUSTOM</h2>
+<h2>📡 HTTP INJECTOR</h2>
 <h3>₹3</h3>
-<button onclick="startProcess()">Buy Now</button>
+<button onclick="startProcess('http')">Buy Now</button>
 </div>
 
+<!-- NETMOD -->
 <div class="card">
 <h2>⚡ NETMOD FILE</h2>
 <h3>₹3</h3>
-<button onclick="startProcess()">Buy Now</button>
+<button onclick="startProcess('netmod')">Buy Now</button>
 </div>
 
 </div>
 
-<!-- LOADING -->
+<!-- LOADER -->
 <div id="loader">⚡ Connecting to Secure Server...</div>
 
 <!-- CHATBOT -->
@@ -157,32 +159,56 @@ margin-bottom:5px;
 
 <script>
 
-/* PAYMENT + FAKE LOADER */
-function startProcess(){
+/* MAIN SYSTEM */
+function startProcess(type){
+
+// save file type
+localStorage.setItem("fileType", type);
+
+// open payment
 window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
 
+// fake loading
 setTimeout(()=>{
 document.getElementById("loader").style.display="block";
 
 setTimeout(()=>{
-window.location.href="download.html";
+goDownload();
 },3000);
 
 },2000);
 }
 
-/* SIMPLE AI CHAT */
+/* DOWNLOAD REDIRECT */
+function goDownload(){
+let type = localStorage.getItem("fileType");
+
+if(type==="vpn"){
+window.location.href="vpn_config.dt.dark";
+}
+
+if(type==="http"){
+window.location.href="http_injector.ehi.ehi";
+}
+
+if(type==="netmod"){
+window.location.href="netmod_config.nm"; // if you add later
+}
+}
+
+/* CHATBOT */
 function chat(e){
 if(e.key==="Enter"){
-let input=e.target.value;
+let input=e.target.value.toLowerCase();
 let log=document.getElementById("chatlog");
 
 log.innerHTML+="<div>👤 "+input+"</div>";
 
-let reply="🤖 Try buying a file or contact support";
+let reply="🤖 Buy file to continue";
 
 if(input.includes("price")) reply="💰 All files are ₹3 only";
-if(input.includes("vpn")) reply="🌐 VPN config available";
+if(input.includes("vpn")) reply="🌐 Dark Tunnel available";
+if(input.includes("http")) reply="📡 HTTP Injector available";
 if(input.includes("help")) reply="📧 Contact: cgpolishkorba@gmail.com";
 
 log.innerHTML+="<div>"+reply+"</div>";
