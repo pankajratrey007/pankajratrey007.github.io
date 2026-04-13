@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPN Pro Store</title>
+<title>Pankaj GOD VPN STORE</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:black;
 color:#00ffcc;
 overflow-x:hidden;
+background:black;
 }
 
-/* BACKGROUND */
+/* 🔥 GOD VFX BACKGROUND */
 body::before{
 content:"";
 position:fixed;
@@ -24,23 +24,25 @@ left:0;
 width:100%;
 height:100%;
 background:
-radial-gradient(circle at 20% 20%, #00ffcc22, transparent 40%),
-radial-gradient(circle at 80% 80%, #0066ff22, transparent 40%);
+radial-gradient(circle at 10% 20%, #00ffcc33, transparent 40%),
+radial-gradient(circle at 80% 30%, #0066ff33, transparent 40%),
+radial-gradient(circle at 50% 80%, #ff00ff22, transparent 50%);
+filter:blur(20px);
+animation:psycho 6s infinite alternate;
 z-index:-1;
-animation:move 6s infinite alternate;
 }
 
-@keyframes move{
-0%{filter:hue-rotate(0deg);}
-100%{filter:hue-rotate(60deg);}
+@keyframes psycho{
+0%{transform:scale(1) rotate(0deg); filter:hue-rotate(0deg);}
+100%{transform:scale(1.2) rotate(10deg); filter:hue-rotate(120deg);}
 }
 
 /* HEADER */
 header{
 text-align:center;
 padding:25px;
-font-size:28px;
-border-bottom:1px solid #00ffcc33;
+font-size:30px;
+text-shadow:0 0 20px #00ffcc;
 }
 
 /* CARD */
@@ -48,41 +50,58 @@ border-bottom:1px solid #00ffcc33;
 width:90%;
 max-width:420px;
 margin:20px auto;
-padding:20px;
-border:1px solid #00ffcc33;
-border-radius:15px;
+padding:25px;
+border-radius:20px;
 background:rgba(0,0,0,0.6);
+border:1px solid #00ffcc33;
+backdrop-filter:blur(15px);
+box-shadow:0 0 30px #00ffcc33;
 text-align:center;
-backdrop-filter:blur(10px);
+transform:perspective(600px) rotateX(5deg);
+transition:0.3s;
 }
 
-/* BUTTON */
+.card:hover{
+transform:scale(1.05) rotateX(0deg);
+box-shadow:0 0 50px #00ffcc;
+}
+
+/* BUTTON 3D */
 button{
-padding:12px 20px;
+padding:14px 22px;
 border:none;
 border-radius:30px;
 background:linear-gradient(45deg,#00ffcc,#0066ff);
 color:white;
+font-weight:bold;
 cursor:pointer;
+transition:0.3s;
+box-shadow:0 10px 30px #00ffcc55;
 }
 
-input, textarea{
-width:90%;
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 40px #00ffcc;
+}
+
+/* INPUT */
+input{
+width:85%;
 padding:10px;
-margin:5px;
+margin:10px;
 border-radius:10px;
 border:none;
 }
 
-/* HIDE */
-.hidden{display:none;}
-
-.star{
-font-size:25px;
-cursor:pointer;
-color:#555;
+/* STATUS */
+#status{
+margin-top:10px;
 }
-.star.active{color:#00ffcc;}
+
+#download{
+display:none;
+margin-top:15px;
+}
 
 </style>
 </head>
@@ -90,121 +109,50 @@ color:#555;
 <body>
 
 <header>
-⚡ VPN PRO STORE ⚡
+⚡ GOD VPN STORE ⚡<br>
+<small>Luxury Hacker VFX Edition</small>
 </header>
 
-<!-- LOGIN -->
-<div class="card" id="loginBox">
-<h2>🔐 Login</h2>
-<input id="user" placeholder="Username">
-<input id="pass" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-</div>
+<div class="card">
 
-<!-- STORE -->
-<div class="card hidden" id="store">
+<h2>🔥 Premium VPN Pack</h2>
+<p>Only ₹3 Unlock System</p>
 
-<h2>🔥 Premium VPN</h2>
+<h3>UPI: pankajratrey7@axl</h3>
 
-<button onclick="buy()">BUY NOW</button>
+<!-- UPI REDIRECT -->
+<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR">
+<button>BUY NOW</button>
+</a>
+
+<br><br>
+
+<button onclick="paid()">I HAVE PAID</button>
 
 <p id="status"></p>
 
-<div id="download" class="hidden">
-<a id="fileLink" href="#" download>
-<button>Download</button>
+<div id="download">
+<a href="files/vpn.zip" download>
+<button>DOWNLOAD FILE</button>
 </a>
 </div>
 
 </div>
 
-<!-- REVIEWS -->
-<div class="card hidden" id="reviewBox">
-
-<h3>⭐ Reviews</h3>
-
-<div id="stars">
-<span class="star" onclick="rate(1)">★</span>
-<span class="star" onclick="rate(2)">★</span>
-<span class="star" onclick="rate(3)">★</span>
-<span class="star" onclick="rate(4)">★</span>
-<span class="star" onclick="rate(5)">★</span>
-</div>
-
-<textarea id="msg" placeholder="Write review"></textarea>
-<button onclick="post()">Post</button>
-
-<div id="list"></div>
-
-</div>
-
-<!-- ADMIN -->
-<div class="card hidden" id="adminBox">
-<h3>🧑‍💻 Admin Panel</h3>
-<input id="file" placeholder="File URL">
-<button onclick="addFile()">Add File</button>
-</div>
-
 <script>
 
-/* LOGIN */
-function login(){
-let u=document.getElementById("user").value;
-let p=document.getElementById("pass").value;
+function paid(){
 
-if(u==="admin" && p==="1234"){
-document.getElementById("adminBox").classList.remove("hidden");
-}
-
-document.getElementById("loginBox").classList.add("hidden");
-document.getElementById("store").classList.remove("hidden");
-document.getElementById("reviewBox").classList.remove("hidden");
-}
-
-/* FILES */
-let files=[];
-
-/* BUY */
-function buy(){
-
-document.getElementById("status").innerText="Processing...";
+document.getElementById("status").innerText="Verifying payment... ⏳";
 
 setTimeout(()=>{
 
-let f=files[Math.floor(Math.random()*files.length)];
-if(!f) f="files/demo.zip";
+document.getElementById("status").innerText="Payment Confirmed ✔";
 
-document.getElementById("fileLink").href=f;
-document.getElementById("download").classList.remove("hidden");
+document.getElementById("download").style.display="block";
 
-document.getElementById("status").innerText="Ready ✔";
+},120000); // 2 minutes
 
-},2000);
-
-}
-
-/* ADMIN ADD FILE */
-function addFile(){
-let f=document.getElementById("file").value;
-files.push(f);
-alert("File Added");
-}
-
-/* RATING */
-function rate(n){
-let s=document.querySelectorAll(".star");
-s.forEach((x,i)=>{
-x.classList.toggle("active",i<n);
-});
-}
-
-/* REVIEWS */
-function post(){
-let msg=document.getElementById("msg").value;
-let div=document.createElement("div");
-div.innerHTML="💬 "+msg;
-document.getElementById("list").prepend(div);
-document.getElementById("msg").value="";
 }
 
 </script>
