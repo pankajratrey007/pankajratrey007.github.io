@@ -1,192 +1,158 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj GOD MODE</title>
-
-<style>
-
-body{
-margin:0;
-background:black;
-color:#00ffcc;
-font-family:monospace;
-overflow:hidden;
-}
-
-/* INTRO */
-#intro{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-padding:20px;
-z-index:9999;
-}
-
-/* SCAN */
-#scan{
-display:none;
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-color:#00ff00;
-text-align:center;
-padding-top:200px;
-z-index:9998;
-}
-
-/* MAIN */
-.main{
-display:none;
-padding:20px;
-text-align:center;
-}
-
-/* BUTTON */
-button{
-padding:12px;
-margin:10px;
-border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#00ffff,#0066ff);
-color:white;
-cursor:pointer;
-}
-
-/* FINGERPRINT */
-#finger{
-font-size:60px;
-margin-top:100px;
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%{opacity:0.5;}
-50%{opacity:1;}
-100%{opacity:0.5;}
-}
-
-/* ADMIN */
-#admin{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-color:red;
-text-align:center;
-padding-top:100px;
-z-index:9999;
-}
-
-</style>
-</head>
-
-<body>
-
-<div id="intro"></div>
-
-<div id="scan">💻 Scanning System...<br>Decrypting Data...</div>
-
-<div id="admin">
-<h1>💀 ADMIN PANEL</h1>
-<p>Secret Access Granted</p>
-</div>
-
-<div id="finger">🖐</div>
-
-<div class="main" id="mainUI">
-<h1>💀 PANKAJ GOD STORE 💀</h1>
-
-<button onclick="buy()">💳 Buy</button>
-<button onclick="voiceAI()">🎤 Talk AI</button>
-<button onclick="openLogin('dt')">🌐 Dark Tunnel</button>
-<button onclick="openLogin('http')">📡 HTTP Injector</button>
-
-</div>
-
 <script>
 
-/* INTRO TEXT */
-let txt="Initializing...\nBypassing Firewall...\nAccess Granted...";
-let i=0;
+/* =========================
+   ⭐ STAR BACKGROUND
+========================= */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-function type(){
-if(i<txt.length){
-document.getElementById("intro").innerHTML+=txt.charAt(i);
-i++;
-setTimeout(type,30);
-}else{
-setTimeout(()=>{
-document.getElementById("intro").style.display="none";
-document.getElementById("finger").onclick=startScan;
-},1000);
-}
-}
-type();
-
-/* FINGERPRINT */
-function startScan(){
-document.getElementById("finger").style.display="none";
-document.getElementById("scan").style.display="block";
-
-setTimeout(()=>{
-document.getElementById("scan").style.display="none";
-document.getElementById("mainUI").style.display="block";
-},3000);
+let stars=[];
+for(let i=0;i<150;i++){
+stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
 }
 
-/* VOICE AI */
-function voiceAI(){
-let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.start();
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="white";
+stars.forEach(s=>{
+ctx.fillRect(s.x,s.y,2,2);
+s.y+=0.5;
+if(s.y>canvas.height) s.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
 
-recognition.onresult=function(e){
-let text=e.results[0][0].transcript.toLowerCase();
-alert("You said: "+text);
-
-if(text.includes("price")) alert("All files ₹3");
-if(text.includes("vpn")) alert("Dark Tunnel available");
-if(text.includes("help")) alert("Contact WhatsApp");
-};
+/* =========================
+   💀 3D CARD EFFECT
+========================= */
+function tilt(e,el){
+let x=(e.offsetX/el.clientWidth-0.5)*20;
+let y=(e.offsetY/el.clientHeight-0.5)*20;
+el.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+}
+function reset(el){
+el.style.transform="rotateY(0) rotateX(0)";
 }
 
-/* PAYMENT */
-function buy(){
+/* =========================
+   💳 PAYMENT
+========================= */
+function buyNow(){
 window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
+}
+
+/* =========================
+   🔐 ONE-TIME PASSWORD SYSTEM
+========================= */
+let validPasswords={};
+
+function generatePassword(type){
+let pass=Math.random().toString(36).substring(2,8);
+localStorage.setItem("pass_"+type,pass);
+alert("Password for "+type+": "+pass);
 }
 
 /* LOGIN */
 function openLogin(type){
-let u=prompt("Username");
-let p=prompt("Password");
 
-if(type==="dt" && u==="pankaj" && p==="1234"){
+let userPass=prompt("Enter Access Password");
+
+let realPass=localStorage.getItem("pass_"+type);
+
+if(userPass===realPass){
+localStorage.removeItem("pass_"+type);
+download(type);
+}else{
+alert("❌ Invalid / Expired Password");
+}
+}
+
+/* DOWNLOAD */
+function download(type){
+if(type==="dt"){
 window.location.href="vpn_config.dt.dark";
-return;
 }
-
-if(type==="http" && u==="pankaj" && p==="4321"){
+if(type==="http"){
 window.location.href="http_injector.ehi.ehi";
-return;
+}
 }
 
-alert("Wrong login");
-}
+/* =========================
+   🕶️ HIDDEN ADMIN SYSTEM
+========================= */
 
-/* SECRET ADMIN (hidden trick) */
-document.addEventListener("keydown",function(e){
-if(e.key==="A"){
-document.getElementById("admin").style.display="block";
+let tapCount=0;
+
+document.querySelector("header").addEventListener("click",()=>{
+tapCount++;
+
+if(tapCount>=5){
+tapCount=0;
+openAdmin();
 }
 });
 
-</script>
+/* ADMIN PASSWORD */
+function openAdmin(){
+let pass=prompt("Enter Admin Password");
 
-</body>
-</html>
+if(pass==="Shadow"){
+document.getElementById("adminPanel").style.display="block";
+}else{
+alert("❌ Wrong Password");
+}
+}
+
+/* =========================
+   🎛️ ADMIN PANEL ACTIONS
+========================= */
+
+function genDT(){
+generatePassword("dt");
+}
+
+function genHTTP(){
+generatePassword("http");
+}
+
+/* =========================
+   💀 EXTRA EFFECTS
+========================= */
+
+/* CLICK PARTICLE EXPLOSION */
+document.addEventListener("click",(e)=>{
+for(let i=0;i<10;i++){
+let div=document.createElement("div");
+div.style.position="fixed";
+div.style.width="5px";
+div.style.height="5px";
+div.style.background="#00ffff";
+div.style.left=e.clientX+"px";
+div.style.top=e.clientY+"px";
+div.style.borderRadius="50%";
+document.body.appendChild(div);
+
+let x=(Math.random()-0.5)*100;
+let y=(Math.random()-0.5)*100;
+
+div.animate([
+{transform:"translate(0,0)",opacity:1},
+{transform:`translate(${x}px,${y}px)`,opacity:0}
+],{duration:800});
+
+setTimeout(()=>div.remove(),800);
+}
+});
+
+/* SOUND EFFECT */
+function playSound(){
+let audio=new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
+audio.play();
+}
+
+document.addEventListener("click",playSound);
+
+</script>
