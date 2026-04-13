@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Download</title>
+<title>Secure Download</title>
 <style>
-body{background:black;color:#00ffd5;text-align:center;padding-top:100px;}
-a{color:#00ffff;font-size:20px;}
+body{
+background:black;
+color:#00ffff;
+text-align:center;
+padding-top:100px;
+font-family:Arial;
+}
+button{
+padding:15px;
+border:none;
+border-radius:30px;
+background:#00ffff;
+color:black;
+font-size:18px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>✅ Payment Received (Demo)</h1>
-<p>Your download is ready</p>
+<h1>🔐 Verified Download Access</h1>
 
-<a href="#">⬇ Download File</a>
+<p>Select your file</p>
+
+<button onclick="download('vpn')">🌐 Dark Tunnel</button><br><br>
+<button onclick="download('http')">📡 HTTP Injector</button>
+
+<script>
+
+function download(type){
+
+let pass = prompt("Enter Password");
+
+if(type==="vpn" && pass==="1234"){
+window.location.href="vpn_config.dt.dark";
+}
+
+else if(type==="http" && pass==="4321"){
+window.location.href="http_injector.ehi.ehi";
+}
+
+else{
+alert("❌ Wrong Password");
+}
+
+}
+
+</script>
 
 </body>
 </html>
