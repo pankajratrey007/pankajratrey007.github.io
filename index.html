@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Pankaj VPN Store</title>
+<title>VPN Pro Store</title>
 
 <style>
 
@@ -12,47 +11,49 @@ body{
 margin:0;
 font-family:Arial;
 background:black;
-color:white;
-background: radial-gradient(circle,#001a1a,#000);
+color:#00ffcc;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, #00ffcc22, transparent 40%),
+radial-gradient(circle at 80% 80%, #0066ff22, transparent 40%);
+z-index:-1;
+animation:move 6s infinite alternate;
+}
+
+@keyframes move{
+0%{filter:hue-rotate(0deg);}
+100%{filter:hue-rotate(60deg);}
 }
 
 /* HEADER */
 header{
-padding:25px;
 text-align:center;
-font-size:30px;
-color:#00ffcc;
-text-shadow:0 0 20px #00ffcc;
-}
-
-/* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
-padding:30px;
+padding:25px;
+font-size:28px;
+border-bottom:1px solid #00ffcc33;
 }
 
 /* CARD */
 .card{
-background:#0a0a0a;
-border-radius:20px;
+width:90%;
+max-width:420px;
+margin:20px auto;
 padding:20px;
-text-align:center;
-box-shadow:0 0 20px #00ffcc55;
-transition:0.4s;
-}
-
-.card:hover{
-transform:rotateY(10deg) scale(1.05);
-box-shadow:0 0 40px #00ffcc;
-}
-
-/* IMAGE */
-.card img{
-width:100%;
+border:1px solid #00ffcc33;
 border-radius:15px;
-margin-bottom:10px;
+background:rgba(0,0,0,0.6);
+text-align:center;
+backdrop-filter:blur(10px);
 }
 
 /* BUTTON */
@@ -62,32 +63,26 @@ border:none;
 border-radius:30px;
 background:linear-gradient(45deg,#00ffcc,#0066ff);
 color:white;
-font-weight:bold;
 cursor:pointer;
-transition:0.3s;
 }
 
-button:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #00ffcc;
-}
-
-/* FORM */
-input{
+input, textarea{
+width:90%;
 padding:10px;
 margin:5px;
 border-radius:10px;
 border:none;
-width:80%;
 }
 
-/* FOOTER */
-footer{
-text-align:center;
-padding:20px;
-margin-top:30px;
-background:#000;
+/* HIDE */
+.hidden{display:none;}
+
+.star{
+font-size:25px;
+cursor:pointer;
+color:#555;
 }
+.star.active{color:#00ffcc;}
 
 </style>
 </head>
@@ -95,82 +90,124 @@ background:#000;
 <body>
 
 <header>
-⚡ PANKAJ HACKER VPN STORE ⚡<br>
-<small>All Files ₹3 Only</small>
+⚡ VPN PRO STORE ⚡
 </header>
 
-<div class="container">
-
-<!-- Dark Tunnel -->
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png">
-<h2>🌐 Dark Tunnel</h2>
-<p>High Speed Config File</p>
-<h3>₹3</h3>
-
-<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR">
-<button>Buy Now</button>
-</a>
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+<h2>🔐 Login</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
 </div>
 
-<!-- HTTP Custom -->
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/2721/2721297.png">
-<h2>⚡ HTTP Custom</h2>
-<p>Fast Gaming Config</p>
-<h3>₹3</h3>
+<!-- STORE -->
+<div class="card hidden" id="store">
 
-<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR">
-<button>Buy Now</button>
-</a>
-</div>
+<h2>🔥 Premium VPN</h2>
 
-<!-- HTTP Injector -->
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/2885/2885417.png">
-<h2>🚀 HTTP Injector</h2>
-<p>Unlimited Trick File</p>
-<h3>₹3</h3>
+<button onclick="buy()">BUY NOW</button>
 
-<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR">
-<button>Buy Now</button>
-</a>
-</div>
+<p id="status"></p>
 
-<!-- NetMod -->
-<div class="card">
-<img src="https://cdn-icons-png.flaticon.com/512/4149/4149646.png">
-<h2>📶 NetMod</h2>
-<p>Stable Network Config</p>
-<h3>₹3</h3>
-
-<a href="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR">
-<button>Buy Now</button>
+<div id="download" class="hidden">
+<a id="fileLink" href="#" download>
+<button>Download</button>
 </a>
 </div>
 
 </div>
 
-<center>
+<!-- REVIEWS -->
+<div class="card hidden" id="reviewBox">
 
-<h2>✅ Payment Verification</h2>
+<h3>⭐ Reviews</h3>
 
-<form action="https://formsubmit.co/cgpolishkorba@gmail.com" method="POST" enctype="multipart/form-data">
+<div id="stars">
+<span class="star" onclick="rate(1)">★</span>
+<span class="star" onclick="rate(2)">★</span>
+<span class="star" onclick="rate(3)">★</span>
+<span class="star" onclick="rate(4)">★</span>
+<span class="star" onclick="rate(5)">★</span>
+</div>
 
-<input type="text" name="name" placeholder="Your Name" required><br>
-<input type="file" name="file" required><br>
+<textarea id="msg" placeholder="Write review"></textarea>
+<button onclick="post()">Post</button>
 
-<button type="submit">Submit Screenshot</button>
+<div id="list"></div>
 
-</form>
+</div>
 
-<p>⚡ After payment verification, file will be sent</p>
+<!-- ADMIN -->
+<div class="card hidden" id="adminBox">
+<h3>🧑‍💻 Admin Panel</h3>
+<input id="file" placeholder="File URL">
+<button onclick="addFile()">Add File</button>
+</div>
 
-</center>
+<script>
 
-<footer>
-📧 Support: cgpolishkorba@gmail.com
-</footer>
+/* LOGIN */
+function login(){
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
+
+if(u==="admin" && p==="1234"){
+document.getElementById("adminBox").classList.remove("hidden");
+}
+
+document.getElementById("loginBox").classList.add("hidden");
+document.getElementById("store").classList.remove("hidden");
+document.getElementById("reviewBox").classList.remove("hidden");
+}
+
+/* FILES */
+let files=[];
+
+/* BUY */
+function buy(){
+
+document.getElementById("status").innerText="Processing...";
+
+setTimeout(()=>{
+
+let f=files[Math.floor(Math.random()*files.length)];
+if(!f) f="files/demo.zip";
+
+document.getElementById("fileLink").href=f;
+document.getElementById("download").classList.remove("hidden");
+
+document.getElementById("status").innerText="Ready ✔";
+
+},2000);
+
+}
+
+/* ADMIN ADD FILE */
+function addFile(){
+let f=document.getElementById("file").value;
+files.push(f);
+alert("File Added");
+}
+
+/* RATING */
+function rate(n){
+let s=document.querySelectorAll(".star");
+s.forEach((x,i)=>{
+x.classList.toggle("active",i<n);
+});
+}
+
+/* REVIEWS */
+function post(){
+let msg=document.getElementById("msg").value;
+let div=document.createElement("div");
+div.innerHTML="💬 "+msg;
+document.getElementById("list").prepend(div);
+document.getElementById("msg").value="";
+}
+
+</script>
 
 </body>
 </html>
