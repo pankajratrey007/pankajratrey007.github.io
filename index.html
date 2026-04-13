@@ -3,263 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cyber VPN Store</title>
+
+<title>Pankaj Ultra Store</title>
 
 <style>
+
 body{
 margin:0;
-font-family:monospace;
-background:black;
-color:#00ffcc;
+font-family:Arial;
+color:white;
 overflow-x:hidden;
+
+/* GRADIENT BACKGROUND */
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
 
-/* 🔥 BACKGROUND ANIMATION */
-body::before{
-content:"";
+/* PARTICLES */
+#particles-js{
 position:fixed;
 width:100%;
 height:100%;
-background:
-radial-gradient(circle at 20% 20%, #00ffcc33, transparent 40%),
-radial-gradient(circle at 80% 30%, #0066ff33, transparent 40%),
-radial-gradient(circle at 50% 80%, #ff00ff22, transparent 50%);
-filter:blur(30px);
-animation:move 8s infinite alternate;
 z-index:-1;
 }
 
-@keyframes move{
-0%{transform:scale(1);}
-100%{transform:scale(1.3);}
-}
-
-.card{
-width:90%;
-max-width:420px;
-margin:20px auto;
+/* HEADER */
+header{
+background:#000000aa;
 padding:20px;
-border-radius:20px;
-background:rgba(0,0,0,0.6);
-border:1px solid #00ffcc55;
 text-align:center;
-box-shadow:0 0 25px #00ffcc44;
+font-size:28px;
+color:#00ffd5;
+box-shadow:0 0 20px #00ffd5;
 }
 
-/* BUTTON */
+/* GRID */
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+padding:30px;
+}
+
+/* CARD */
+.card{
+background:#111111aa;
+border-radius:20px;
+padding:20px;
+text-align:center;
+box-shadow:0 0 25px #00ffd580;
+transition:0.4s;
+backdrop-filter:blur(10px);
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 40px #00ffd5;
+}
+
 button{
-padding:12px;
+padding:12px 25px;
 border:none;
 border-radius:30px;
-background:linear-gradient(45deg,#00ffcc,#0066ff);
+background:linear-gradient(45deg,#00ffd5,#0066ff);
 color:white;
 cursor:pointer;
-margin:5px;
 }
 
-/* TERMINAL */
-#terminal{
+/* LOADING SCREEN */
+#loader{
 display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:black;
-color:#00ffcc;
+color:#00ffd5;
+font-size:25px;
+text-align:center;
+padding-top:200px;
+z-index:999;
+}
+
+/* CHATBOT */
+#chatbot{
+position:fixed;
+bottom:20px;
+right:20px;
+width:250px;
+background:#111;
+border-radius:15px;
 padding:10px;
-height:200px;
-overflow:auto;
-font-size:12px;
-text-align:left;
+box-shadow:0 0 15px #00ffd5;
+}
+
+#chatbot input{
+width:100%;
+padding:8px;
+border:none;
 border-radius:10px;
 }
 
-/* SECRET */
-#secret{display:none;}
-
-.star{cursor:pointer;color:#555;}
-.star.active{color:#00ffcc;}
+#chatlog{
+height:120px;
+overflow:auto;
+font-size:12px;
+margin-bottom:5px;
+}
 
 </style>
 </head>
 
 <body>
 
+<div id="particles-js"></div>
+
+<header>
+💀 PANKAJ ULTRA STORE 💀
+</header>
+
+<div class="container">
+
 <div class="card">
-<h2>🔥 VPN CYBER STORE</h2>
-<h3>₹3 Premium VPN</h3>
-
-<button onclick="buy()">BUY</button>
-<button onclick="paid()">I PAID</button>
-
-<p id="status"></p>
-
-<div id="terminal"></div>
-
-<div id="download">
-<a href="#" download><button>DOWNLOAD</button></a>
+<h2>🌐 VPN CONFIG</h2>
+<h3>₹3</h3>
+<button onclick="startProcess()">Buy Now</button>
 </div>
 
-<p id="views"></p>
-<p id="downloads"></p>
-
-<button onclick="toggleSecret()">⚡ Secret</button>
+<div class="card">
+<h2>📡 HTTP CUSTOM</h2>
+<h3>₹3</h3>
+<button onclick="startProcess()">Buy Now</button>
 </div>
 
-<!-- SECRET PANEL -->
-<div class="card" id="secret">
-
-<h3>⭐ Reviews</h3>
-
-<div>
-<span class="star" onclick="rate(1)">★</span>
-<span class="star" onclick="rate(2)">★</span>
-<span class="star" onclick="rate(3)">★</span>
-<span class="star" onclick="rate(4)">★</span>
-<span class="star" onclick="rate(5)">★</span>
+<div class="card">
+<h2>⚡ NETMOD FILE</h2>
+<h3>₹3</h3>
+<button onclick="startProcess()">Buy Now</button>
 </div>
 
-<input id="name" placeholder="Name">
-<textarea id="msg" placeholder="Review"></textarea>
-<input type="file" id="img">
-
-<button onclick="post()">Post</button>
-
-<div id="list"></div>
-
-<hr>
-
-<h3>🤖 AI Chat</h3>
-<div id="chatBox" style="height:150px;overflow:auto;background:#000;"></div>
-<input id="aiInput">
-<button onclick="askAI()">Send</button>
-
 </div>
+
+<!-- LOADING -->
+<div id="loader">⚡ Connecting to Secure Server...</div>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+<div id="chatlog"></div>
+<input placeholder="Ask something..." onkeypress="chat(event)">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <script>
 
-/* 📊 TRACKING */
-let v=localStorage.getItem("views")||0;
-v++; localStorage.setItem("views",v);
-views.innerText="👁️ "+v;
-
-let dCount=localStorage.getItem("downloads")||0;
-downloads.innerText="⬇ "+dCount;
-
-/* FILES */
-const files=["files/a.zip","files/b.zip","files/c.zip"];
-
-/* BUY */
-function buy(){
-let upi="upi://pay?pa=pankajratrey7@axl&pn=Pankaj&am=3&cu=INR";
-let a=document.createElement("a");
-a.href=upi;
-a.click();
-status.innerText="Pay and click I PAID";
-}
-
-/* HACKER LOADING */
-function paid(){
-
-terminal.style.display="block";
-
-let lines=[
-"Initializing secure protocol...",
-"Connecting to dark server...",
-"Injecting payment token...",
-"Bypassing firewall...",
-"Decrypting payment...",
-"Authorizing access...",
-"Finalizing..."
-];
-
-let i=0;
-
-let interval=setInterval(()=>{
-terminal.innerHTML+="<p>> "+lines[i]+"</p>";
-terminal.scrollTop=terminal.scrollHeight;
-i++;
-if(i>=lines.length)clearInterval(interval);
-},8000);
+/* PAYMENT + FAKE LOADER */
+function startProcess(){
+window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
 
 setTimeout(()=>{
-let file=files[Math.floor(Math.random()*files.length)];
-download.style.display="block";
-document.querySelector("#download a").href=file;
-status.innerText="✔ VERIFIED";
+document.getElementById("loader").style.display="block";
 
-dCount++;
-localStorage.setItem("downloads",dCount);
-downloads.innerText="⬇ "+dCount;
+setTimeout(()=>{
+window.location.href="download.html";
+},3000);
 
-},60000);
+},2000);
 }
 
-/* SECRET */
-function toggleSecret(){
-secret.style.display = secret.style.display=="block"?"none":"block";
+/* SIMPLE AI CHAT */
+function chat(e){
+if(e.key==="Enter"){
+let input=e.target.value;
+let log=document.getElementById("chatlog");
+
+log.innerHTML+="<div>👤 "+input+"</div>";
+
+let reply="🤖 Try buying a file or contact support";
+
+if(input.includes("price")) reply="💰 All files are ₹3 only";
+if(input.includes("vpn")) reply="🌐 VPN config available";
+if(input.includes("help")) reply="📧 Contact: cgpolishkorba@gmail.com";
+
+log.innerHTML+="<div>"+reply+"</div>";
+
+e.target.value="";
+}
 }
 
-/* ⭐ */
-let rating=0;
-function rate(n){
-rating=n;
-document.querySelectorAll(".star").forEach((s,i)=>{
-s.classList.toggle("active",i<n);
+/* PARTICLES */
+particlesJS("particles-js",{
+"particles":{
+"number":{"value":60},
+"size":{"value":3},
+"move":{"speed":2},
+"line_linked":{"enable":true}
+}
 });
-}
-
-/* SAVE LOAD */
-window.onload=function(){
-let r=localStorage.getItem("reviews");
-if(r) list.innerHTML=r;
-}
-
-/* REVIEW */
-function post(){
-let n=name.value;
-let m=msg.value;
-let imgFile=img.files[0];
-
-if(!n||!m)return;
-
-let div=document.createElement("div");
-
-if(imgFile){
-let reader=new FileReader();
-reader.onload=function(e){
-div.innerHTML=`<b>${n}</b> (${rating}⭐)<br>${m}<br><img src="${e.target.result}" width="80"><hr>`;
-list.prepend(div);
-localStorage.setItem("reviews",list.innerHTML);
-};
-reader.readAsDataURL(imgFile);
-}else{
-div.innerHTML=`<b>${n}</b> (${rating}⭐): ${m}`;
-list.prepend(div);
-localStorage.setItem("reviews",list.innerHTML);
-}
-}
-
-/* 🤖 AI HUMAN STYLE */
-function askAI(){
-
-let q=aiInput.value.toLowerCase();
-chatBox.innerHTML+="<p><b>You:</b> "+q+"</p>";
-
-let reply="Hmm samajh nahi aaya bro 🤔";
-
-if(q.includes("hi")||q.includes("hello"))
-reply="Hey bro 👋 kya help chahiye?";
-else if(q.includes("price"))
-reply="Bhai sirf ₹3 hai, cheap and best 😎";
-else if(q.includes("vpn"))
-reply="Ye VPN fast hai gaming ke liye 🔥";
-else if(q.includes("problem"))
-reply="Agar issue hai toh review section me bata bro 👍";
-else if(q.includes("download"))
-reply="Payment ke baad I PAID dabao, auto unlock ho jayega 💻";
-
-chatBox.innerHTML+="<p><b>AI:</b> "+reply+"</p>";
-
-aiInput.value="";
-chatBox.scrollTop=chatBox.scrollHeight;
-}
 
 </script>
 
