@@ -2,103 +2,94 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Pankaj Ultra Store</title>
 
 <style>
 
-/* 🌌 BACKGROUND */
 body{
 margin:0;
-background:black;
-color:#00ffff;
-font-family:monospace;
+font-family:Arial;
+background:linear-gradient(135deg,#020024,#090979,#00d4ff);
+color:white;
 overflow:hidden;
 }
 
-/* HEADER */
-header{
-text-align:center;
-padding:15px;
-font-size:20px;
-background:#000;
-box-shadow:0 0 20px #00ffff;
-}
-
-/* CANVAS */
-#stars{
+#bg{
 position:fixed;
 top:0;
 left:0;
 z-index:-1;
 }
 
-/* BUTTON */
-.btn{
-display:block;
-margin:15px auto;
-padding:15px;
-width:80%;
+header{
 text-align:center;
-background:#00ffff;
-color:black;
+padding:15px;
+font-size:22px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
+}
+
+.card{
+width:85%;
+margin:20px auto;
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px rgba(0,255,255,0.5);
+text-align:center;
+}
+
+.btn{
+margin:10px;
+padding:12px;
 border-radius:10px;
-font-weight:bold;
-box-shadow:0 0 20px #00ffff;
-}
-
-/* FINGERPRINT */
-#fingerprint{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-padding:15px 30px;
-border-radius:50px;
 background:#00ffff;
 color:black;
-box-shadow:0 0 20px #00ffff;
-animation:pulse 2s infinite;
-}
-@keyframes pulse{
-0%{box-shadow:0 0 10px #00ffff;}
-50%{box-shadow:0 0 30px #00ffff;}
-100%{box-shadow:0 0 10px #00ffff;}
+font-weight:bold;
 }
 
-/* 3D CUBE */
-.cube{
-width:100px;
-height:100px;
-margin:30px auto;
-transform-style:preserve-3d;
-animation:rotate 8s infinite linear;
+.skull{
+position:fixed;
+top:40%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:50px;
+animation:float 4s infinite;
 }
-.cube div{
-position:absolute;
-width:100px;
-height:100px;
-background:#00ffff;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-@keyframes rotate{
-0%{transform:rotateX(0) rotateY(0);}
-100%{transform:rotateX(360deg) rotateY(360deg);}
+@keyframes float{
+0%{transform:translate(-50%,-50%) translateY(0);}
+50%{transform:translate(-50%,-50%) translateY(-20px);}
+100%{transform:translate(-50%,-50%) translateY(0);}
 }
 
-/* ADMIN PANEL */
-#adminPanel{
+.flower{
+position:fixed;
+font-size:20px;
+animation:fall linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+#admin{
 display:none;
 position:fixed;
 top:20%;
 left:50%;
 transform:translateX(-50%);
-background:#000;
+background:black;
 padding:20px;
-box-shadow:0 0 30px #00ffff;
+border-radius:15px;
+box-shadow:0 0 20px cyan;
 z-index:999;
+}
+
+#networkStatus{
+margin-top:10px;
+color:#00ffcc;
+text-shadow:0 0 10px cyan;
 }
 
 </style>
@@ -108,119 +99,143 @@ z-index:999;
 
 <header>PANKAJ 💀 ULTRA STORE</header>
 
-<canvas id="stars"></canvas>
+<canvas id="bg"></canvas>
 
-<div class="cube">
-<div>DT</div>
-<div>HTTP</div>
-<div>ADMIN</div>
-<div>LOGIN</div>
+<div class="skull">💀</div>
+
+<div class="card">
+<h2>Premium Access</h2>
+
+<div class="btn" onclick="buy()">💳 Buy</div>
+<div class="btn" onclick="login()">🔐 Login</div>
+<div class="btn" onclick="download('dt')">⬇ DT File</div>
+<div class="btn" onclick="download('http')">⬇ HTTP File</div>
+
 </div>
 
-<div class="btn" onclick="buyNow()">💳 Buy Access</div>
-<div class="btn" onclick="openLogin('dt')">⬇ Download DT</div>
-<div class="btn" onclick="openLogin('http')">⬇ Download HTTP</div>
-<div class="btn" onclick="realLogin()">🔐 Login</div>
+<div class="card">
+<h2>📶 Jio Network Mode</h2>
 
-<div id="fingerprint" onclick="unlockFP()">🔓 Fingerprint Unlock</div>
+<div class="btn" onclick="selectNetwork('4g')">⚡ Jio 4G</div>
+<div class="btn" onclick="selectNetwork('5g')">🚀 Jio 5G</div>
 
-<div id="adminPanel">
-<h3>💀 ADMIN</h3>
-<button onclick="genDT()">DT Password</button><br><br>
-<button onclick="genHTTP()">HTTP Password</button><br><br>
-<button onclick="clearAll()">Clear</button><br><br>
+<div id="networkStatus"></div>
+</div>
+
+<div id="admin">
+<h3>💀 Admin Panel</h3>
+<button onclick="genUser()">Generate User</button><br><br>
+<button onclick="genPass()">Generate Pass</button><br><br>
 <button onclick="this.parentElement.style.display='none'">Close</button>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+
 <script>
 
-/* ================== LOAD SAFE ================== */
-document.addEventListener("DOMContentLoaded",function(){
-
-/* ⭐ STAR BG */
-const canvas=document.getElementById("stars");
-if(canvas){
+/* 🌌 BACKGROUND */
+const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
-let stars=[];
-for(let i=0;i<100;i++){
-stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
 }
 
-function draw(){
+function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="white";
-stars.forEach(s=>{
-ctx.fillRect(s.x,s.y,2,2);
-s.y+=0.3;
-if(s.y>canvas.height) s.y=0;
-});
-requestAnimationFrame(draw);
-}
-draw();
-}
 
-/* 💳 PAYMENT (SIMULATION SAFE) */
-window.buyNow=function(){
-alert("After payment, contact admin for password");
-}
-
-/* 🔐 PASSWORD SYSTEM */
-window.generatePassword=function(type){
-let pass=Math.random().toString(36).substring(2,8);
-localStorage.setItem("pass_"+type,pass);
-alert("Password: "+pass);
-}
-
-window.openLogin=function(type){
-
-fakeLoad(()=>{
-
-let p=prompt("Enter Password");
-let real=localStorage.getItem("pass_"+type);
-
-if(p===real){
-localStorage.removeItem("pass_"+type);
-download(type);
-}else{
-alert("Wrong / Expired");
-}
-
+particles.forEach(p=>{
+ctx.fillRect(p.x,p.y,2,2);
+p.y+=0.3;
+if(p.y>canvas.height)p.y=0;
 });
 
+requestAnimationFrame(animate);
+}
+animate();
+
+/* 🌸 FLOWERS */
+setInterval(()=>{
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+f.style.left=Math.random()*100+"vw";
+f.style.animationDuration=(Math.random()*5+5)+"s";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),8000);
+},500);
+
+/* 💳 BUY */
+function buy(){
+alert("After payment contact admin");
 }
 
+/* 🔐 FIREBASE LOGIN */
+const firebaseConfig={
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_PROJECT.firebaseapp.com"
+};
+firebase.initializeApp(firebaseConfig);
+
+function login(){
+let email=prompt("Email");
+let pass=prompt("Password");
+
+firebase.auth().signInWithEmailAndPassword(email,pass)
+.then(()=>alert("Login success"))
+.catch(()=>alert("Login failed"));
+}
+
+/* 📥 DOWNLOAD */
 function download(type){
-if(type==="dt"){
-window.location.href="vpn_config.dt.dark";
-}
-if(type==="http"){
-window.location.href="http_injector.ehi.ehi";
-}
+alert("Login required first");
 }
 
-/* ⏳ LOADER */
-function fakeLoad(cb){
-let l=document.createElement("div");
-l.style.position="fixed";
-l.style.top=0;
-l.style.left=0;
-l.style.width="100%";
-l.style.height="100%";
-l.style.background="black";
-l.style.color="#00ffff";
-l.style.display="flex";
-l.style.alignItems="center";
-l.style.justifyContent="center";
-l.innerHTML="Connecting...";
-document.body.appendChild(l);
+/* 📶 NETWORK */
+function selectNetwork(type){
+let status=document.getElementById("networkStatus");
 
+let scan=document.createElement("div");
+scan.style.position="fixed";
+scan.style.top=0;
+scan.style.left=0;
+scan.style.width="100%";
+scan.style.height="100%";
+scan.style.background="black";
+scan.style.color="#00ffff";
+scan.style.display="flex";
+scan.style.alignItems="center";
+scan.style.justifyContent="center";
+scan.style.zIndex="9999";
+
+document.body.appendChild(scan);
+
+let p=0;
+let i=setInterval(()=>{
+p+=10;
+scan.innerHTML="Connecting "+type.toUpperCase()+"... "+p+"%";
+
+if(p>=100){
+clearInterval(i);
 setTimeout(()=>{
-l.remove();
-cb();
-},1200);
+scan.remove();
+
+if(type==="4g"){
+status.innerHTML="⚡ Connected to Jio 4G";
+}
+if(type==="5g"){
+status.innerHTML="🚀 Connected to Jio 5G Ultra";
+}
+
+},500);
+}
+
+},200);
 }
 
 /* 🕶️ ADMIN */
@@ -231,58 +246,17 @@ if(tap>=5){
 tap=0;
 let p=prompt("Admin Password");
 if(p==="Shadow"){
-document.getElementById("adminPanel").style.display="block";
-}else alert("Wrong");
+document.getElementById("admin").style.display="block";
+}
 }
 };
 
-window.genDT=function(){generatePassword("dt");}
-window.genHTTP=function(){generatePassword("http");}
-window.clearAll=function(){localStorage.clear();alert("Cleared");}
-
-/* 🔊 SOUND */
-document.addEventListener("click",()=>{
-try{
-new Audio("https://www.soundjay.com/button/sounds/button-16.mp3").play();
-}catch(e){}
-});
-
-/* 💀 PARTICLES */
-document.addEventListener("click",(e)=>{
-for(let i=0;i<6;i++){
-let d=document.createElement("div");
-d.style.position="fixed";
-d.style.width="4px";
-d.style.height="4px";
-d.style.background="#00ffff";
-d.style.left=e.clientX+"px";
-d.style.top=e.clientY+"px";
-document.body.appendChild(d);
-
-let x=(Math.random()-0.5)*80;
-let y=(Math.random()-0.5)*80;
-
-d.animate([
-{transform:"translate(0,0)",opacity:1},
-{transform:`translate(${x}px,${y}px)`,opacity:0}
-],{duration:600});
-
-setTimeout(()=>d.remove(),600);
+/* 🎛️ ADMIN GEN */
+function genUser(){
+alert("User: user"+Math.floor(Math.random()*1000));
 }
-});
-
-});
-
-/* 🔓 FINGERPRINT */
-function unlockFP(){
-alert("Access Granted");
-}
-
-/* 🔐 REAL LOGIN (ADD FIREBASE KEYS) */
-function realLogin(){
-let email=prompt("Email");
-let pass=prompt("Password");
-alert("Login system needs Firebase setup");
+function genPass(){
+alert("Pass: "+Math.random().toString(36).substring(2,8));
 }
 
 </script>
