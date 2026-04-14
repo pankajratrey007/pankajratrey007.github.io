@@ -2,18 +2,81 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj Ultra Store</title>
+<title>Pankaj Ultra Panel</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#020024,#090979,#00d4ff);
-color:white;
+background:black;
+color:#00ffff;
 overflow:hidden;
 }
 
+/* FULL SCREEN PANEL */
+.container{
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+/* CARD */
+.panel{
+width:80%;
+max-width:900px;
+padding:30px;
+border-radius:20px;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(20px);
+box-shadow:0 0 40px cyan;
+text-align:center;
+}
+
+/* BUTTON */
+.btn{
+padding:12px 20px;
+margin:10px;
+border:1px solid cyan;
+background:transparent;
+color:cyan;
+border-radius:10px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:cyan;
+color:black;
+box-shadow:0 0 20px cyan;
+transform:scale(1.1);
+}
+
+/* SELECT */
+select{
+padding:10px;
+margin:10px;
+border-radius:8px;
+}
+
+/* SKULL */
+.skull{
+position:absolute;
+top:20%;
+left:50%;
+transform:translateX(-50%);
+font-size:60px;
+animation:float 4s infinite;
+}
+@keyframes float{
+0%{transform:translateX(-50%) translateY(0);}
+50%{transform:translateX(-50%) translateY(-20px);}
+100%{transform:translateX(-50%) translateY(0);}
+}
+
+/* BG CANVAS */
 #bg{
 position:fixed;
 top:0;
@@ -21,75 +84,23 @@ left:0;
 z-index:-1;
 }
 
-header{
-text-align:center;
-padding:15px;
-font-size:22px;
-background:rgba(0,0,0,0.5);
-backdrop-filter:blur(10px);
-}
-
-.card{
-width:85%;
-margin:20px auto;
-padding:20px;
-border-radius:20px;
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(10px);
-box-shadow:0 0 20px rgba(0,255,255,0.5);
-text-align:center;
-}
-
-.btn{
-margin:10px;
-padding:12px;
-border-radius:10px;
-background:#00ffff;
-color:black;
-font-weight:bold;
-}
-
-.skull{
-position:fixed;
-top:40%;
+/* LOGIN */
+#login{
+position:absolute;
+top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:50px;
-animation:float 4s infinite;
-}
-@keyframes float{
-0%{transform:translate(-50%,-50%) translateY(0);}
-50%{transform:translate(-50%,-50%) translateY(-20px);}
-100%{transform:translate(-50%,-50%) translateY(0);}
-}
-
-.flower{
-position:fixed;
-font-size:20px;
-animation:fall linear infinite;
-}
-@keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(110vh);}
-}
-
-#admin{
-display:none;
-position:fixed;
-top:20%;
-left:50%;
-transform:translateX(-50%);
 background:black;
 padding:20px;
 border-radius:15px;
 box-shadow:0 0 20px cyan;
-z-index:999;
 }
 
-#networkStatus{
-margin-top:10px;
-color:#00ffcc;
-text-shadow:0 0 10px cyan;
+input{
+padding:10px;
+margin:10px;
+border-radius:8px;
+border:none;
 }
 
 </style>
@@ -97,166 +108,106 @@ text-shadow:0 0 10px cyan;
 
 <body>
 
-<header>PANKAJ 💀 ULTRA STORE</header>
-
 <canvas id="bg"></canvas>
 
 <div class="skull">💀</div>
 
-<div class="card">
-<h2>Premium Access</h2>
-
-<div class="btn" onclick="buy()">💳 Buy</div>
-<div class="btn" onclick="login()">🔐 Login</div>
-<div class="btn" onclick="download('dt')">⬇ DT File</div>
-<div class="btn" onclick="download('http')">⬇ HTTP File</div>
-
+<!-- LOGIN -->
+<div id="login">
+<h3>Login</h3>
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+<button class="btn" onclick="login()">Enter</button>
 </div>
 
-<div class="card">
-<h2>📶 Jio Network Mode</h2>
+<!-- MAIN PANEL -->
+<div class="container" id="main" style="display:none;">
+<div class="panel">
 
-<div class="btn" onclick="selectNetwork('4g')">⚡ Jio 4G</div>
-<div class="btn" onclick="selectNetwork('5g')">🚀 Jio 5G</div>
+<h2>💀 Network Config Panel</h2>
 
-<div id="networkStatus"></div>
+<select id="sim">
+<option>Jio</option>
+<option>Airtel</option>
+<option>Vi</option>
+<option>BSNL</option>
+</select>
+
+<select id="net">
+<option>4G</option>
+<option>5G</option>
+</select>
+
+<br>
+
+<button class="btn" onclick="download('dt')">⬇ Download Dark Tunnel</button>
+<button class="btn" onclick="download('http')">⬇ Download HTTP Injector</button>
+
+<p id="status"></p>
+
 </div>
-
-<div id="admin">
-<h3>💀 Admin Panel</h3>
-<button onclick="genUser()">Generate User</button><br><br>
-<button onclick="genPass()">Generate Pass</button><br><br>
-<button onclick="this.parentElement.style.display='none'">Close</button>
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 
 <script>
 
 /* 🌌 BACKGROUND */
-const canvas=document.getElementById("bg");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+const c=document.getElementById("bg");
+const ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
 
-let particles=[];
-for(let i=0;i<80;i++){
-particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
+let stars=[];
+for(let i=0;i<100;i++){
+stars.push({x:Math.random()*c.width,y:Math.random()*c.height});
 }
 
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
+function anim(){
+ctx.clearRect(0,0,c.width,c.height);
 ctx.fillStyle="white";
 
-particles.forEach(p=>{
-ctx.fillRect(p.x,p.y,2,2);
-p.y+=0.3;
-if(p.y>canvas.height)p.y=0;
+stars.forEach(s=>{
+ctx.fillRect(s.x,s.y,2,2);
+s.y+=0.3;
+if(s.y>c.height)s.y=0;
 });
 
-requestAnimationFrame(animate);
+requestAnimationFrame(anim);
 }
-animate();
+anim();
 
-/* 🌸 FLOWERS */
-setInterval(()=>{
-let f=document.createElement("div");
-f.className="flower";
-f.innerHTML="🌸";
-f.style.left=Math.random()*100+"vw";
-f.style.animationDuration=(Math.random()*5+5)+"s";
-document.body.appendChild(f);
-setTimeout(()=>f.remove(),8000);
-},500);
-
-/* 💳 BUY */
-function buy(){
-alert("After payment contact admin");
-}
-
-/* 🔐 FIREBASE LOGIN */
-const firebaseConfig={
-apiKey:"YOUR_KEY",
-authDomain:"YOUR_PROJECT.firebaseapp.com"
-};
-firebase.initializeApp(firebaseConfig);
-
+/* 🔐 LOGIN */
 function login(){
-let email=prompt("Email");
-let pass=prompt("Password");
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
 
-firebase.auth().signInWithEmailAndPassword(email,pass)
-.then(()=>alert("Login success"))
-.catch(()=>alert("Login failed"));
+if(u==="pankaj" && p==="9301101554"){
+document.getElementById("login").style.display="none";
+document.getElementById("main").style.display="flex";
+}else{
+alert("Wrong login");
+}
 }
 
-/* 📥 DOWNLOAD */
+/* 📥 DOWNLOAD SYSTEM */
 function download(type){
-alert("Login required first");
-}
 
-/* 📶 NETWORK */
-function selectNetwork(type){
-let status=document.getElementById("networkStatus");
+let sim=document.getElementById("sim").value;
+let net=document.getElementById("net").value;
 
-let scan=document.createElement("div");
-scan.style.position="fixed";
-scan.style.top=0;
-scan.style.left=0;
-scan.style.width="100%";
-scan.style.height="100%";
-scan.style.background="black";
-scan.style.color="#00ffff";
-scan.style.display="flex";
-scan.style.alignItems="center";
-scan.style.justifyContent="center";
-scan.style.zIndex="9999";
+document.getElementById("status").innerHTML=
+"⚡ Preparing "+sim+" "+net+" Config...";
 
-document.body.appendChild(scan);
-
-let p=0;
-let i=setInterval(()=>{
-p+=10;
-scan.innerHTML="Connecting "+type.toUpperCase()+"... "+p+"%";
-
-if(p>=100){
-clearInterval(i);
 setTimeout(()=>{
-scan.remove();
 
-if(type==="4g"){
-status.innerHTML="⚡ Connected to Jio 4G";
+if(type==="dt"){
+window.location.href="vpn_config.dt.dark";
 }
-if(type==="5g"){
-status.innerHTML="🚀 Connected to Jio 5G Ultra";
-}
-
-},500);
+if(type==="http"){
+window.location.href="http_injector.ehi.ehi";
 }
 
-},200);
-}
+},1500);
 
-/* 🕶️ ADMIN */
-let tap=0;
-document.querySelector("header").onclick=()=>{
-tap++;
-if(tap>=5){
-tap=0;
-let p=prompt("Admin Password");
-if(p==="Shadow"){
-document.getElementById("admin").style.display="block";
-}
-}
-};
-
-/* 🎛️ ADMIN GEN */
-function genUser(){
-alert("User: user"+Math.floor(Math.random()*1000));
-}
-function genPass(){
-alert("Pass: "+Math.random().toString(36).substring(2,8));
 }
 
 </script>
