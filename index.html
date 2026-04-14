@@ -2,86 +2,56 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj Ultra Panel</title>
+<title>Pankaj GOD MODE</title>
 
 <style>
-
 body{
 margin:0;
-font-family:Arial;
-background:black;
-color:#00ffff;
 overflow:hidden;
+font-family:monospace;
+color:#00ffff;
+background:black;
 }
 
-/* FULL SCREEN PANEL */
-.container{
-width:100%;
-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
+/* 🤖 HUD */
+#hud{
+position:absolute;
+top:10px;
+left:10px;
+font-size:12px;
+opacity:0.8;
 }
 
-/* CARD */
-.panel{
-width:80%;
-max-width:900px;
-padding:30px;
-border-radius:20px;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(20px);
-box-shadow:0 0 40px cyan;
-text-align:center;
+#jarvis{
+position:absolute;
+bottom:20px;
+left:20px;
+font-size:14px;
+text-shadow:0 0 10px cyan;
+}
+
+/* 💠 PANEL */
+#panel{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(0,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 30px cyan;
+display:none;
 }
 
 /* BUTTON */
 .btn{
-padding:12px 20px;
 margin:10px;
+padding:10px 15px;
 border:1px solid cyan;
 background:transparent;
 color:cyan;
 border-radius:10px;
-transition:0.3s;
-}
-
-.btn:hover{
-background:cyan;
-color:black;
-box-shadow:0 0 20px cyan;
-transform:scale(1.1);
-}
-
-/* SELECT */
-select{
-padding:10px;
-margin:10px;
-border-radius:8px;
-}
-
-/* SKULL */
-.skull{
-position:absolute;
-top:20%;
-left:50%;
-transform:translateX(-50%);
-font-size:60px;
-animation:float 4s infinite;
-}
-@keyframes float{
-0%{transform:translateX(-50%) translateY(0);}
-50%{transform:translateX(-50%) translateY(-20px);}
-100%{transform:translateX(-50%) translateY(0);}
-}
-
-/* BG CANVAS */
-#bg{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
 }
 
 /* LOGIN */
@@ -92,39 +62,43 @@ left:50%;
 transform:translate(-50%,-50%);
 background:black;
 padding:20px;
-border-radius:15px;
+border-radius:10px;
 box-shadow:0 0 20px cyan;
 }
 
 input{
 padding:10px;
 margin:10px;
-border-radius:8px;
 border:none;
+border-radius:5px;
 }
 
+video{
+display:none;
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
-
-<div class="skull">💀</div>
-
 <!-- LOGIN -->
 <div id="login">
 <h3>Login</h3>
-<input id="user" placeholder="Username"><br>
-<input id="pass" type="password" placeholder="Password"><br>
+<input id="user"><br>
+<input id="pass" type="password"><br>
 <button class="btn" onclick="login()">Enter</button>
 </div>
 
-<!-- MAIN PANEL -->
-<div class="container" id="main" style="display:none;">
-<div class="panel">
+<!-- HUD -->
+<div id="hud">
+💀 SYSTEM ONLINE<br>
+📡 NETWORK: READY<br>
+⚡ STATUS: ACTIVE
+</div>
 
-<h2>💀 Network Config Panel</h2>
+<!-- PANEL -->
+<div id="panel">
+<h2>Control</h2>
 
 <select id="sim">
 <option>Jio</option>
@@ -140,75 +114,137 @@ border:none;
 
 <br>
 
-<button class="btn" onclick="download('dt')">⬇ Download Dark Tunnel</button>
-<button class="btn" onclick="download('http')">⬇ Download HTTP Injector</button>
-
-<p id="status"></p>
-
+<button class="btn" onclick="download()">Download</button>
+<button class="btn" onclick="closePanel()">Close</button>
 </div>
-</div>
+
+<div id="jarvis">Initializing...</div>
+
+<video id="cam" autoplay></video>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 
-/* 🌌 BACKGROUND */
-const c=document.getElementById("bg");
-const ctx=c.getContext("2d");
-c.width=innerWidth;
-c.height=innerHeight;
-
-let stars=[];
-for(let i=0;i<100;i++){
-stars.push({x:Math.random()*c.width,y:Math.random()*c.height});
-}
-
-function anim(){
-ctx.clearRect(0,0,c.width,c.height);
-ctx.fillStyle="white";
-
-stars.forEach(s=>{
-ctx.fillRect(s.x,s.y,2,2);
-s.y+=0.3;
-if(s.y>c.height)s.y=0;
-});
-
-requestAnimationFrame(anim);
-}
-anim();
-
 /* 🔐 LOGIN */
 function login(){
-let u=document.getElementById("user").value;
-let p=document.getElementById("pass").value;
-
-if(u==="pankaj" && p==="9301101554"){
-document.getElementById("login").style.display="none";
-document.getElementById("main").style.display="flex";
+if(user.value==="pankaj" && pass.value==="9301101554"){
+login.style.display="none";
+jarvis("Welcome Pankaj");
+startVoice();
+startCamera();
 }else{
-alert("Wrong login");
+alert("Wrong");
 }
 }
 
-/* 📥 DOWNLOAD SYSTEM */
-function download(type){
+/* 🤖 JARVIS VOICE */
+function jarvis(text){
+let msg=new SpeechSynthesisUtterance(text);
+speechSynthesis.speak(msg);
 
+let el=document.getElementById("jarvis");
+el.innerHTML=text;
+}
+
+/* 🎤 VOICE COMMAND */
+function startVoice(){
+let rec=new(window.SpeechRecognition||webkitSpeechRecognition)();
+rec.continuous=true;
+
+rec.onresult=(e)=>{
+let cmd=e.results[e.results.length-1][0].transcript.toLowerCase();
+
+if(cmd.includes("open panel")){
+openPanel();
+jarvis("Opening panel");
+}
+
+if(cmd.includes("close")){
+closePanel();
+}
+
+};
+
+rec.start();
+}
+
+/* ✋ CAMERA (gesture base) */
+function startCamera(){
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{
+cam.srcObject=stream;
+});
+}
+
+/* PANEL */
+function openPanel(){
+panel.style.display="block";
+}
+function closePanel(){
+panel.style.display="none";
+}
+
+/* DOWNLOAD */
+function download(){
 let sim=document.getElementById("sim").value;
 let net=document.getElementById("net").value;
 
-document.getElementById("status").innerHTML=
-"⚡ Preparing "+sim+" "+net+" Config...";
-
-setTimeout(()=>{
-
-if(type==="dt"){
-window.location.href="vpn_config.dt.dark";
-}
-if(type==="http"){
-window.location.href="http_injector.ehi.ehi";
+jarvis("Downloading "+sim+" "+net);
 }
 
-},1500);
+/* 🌌 THREE.JS */
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
+camera.position.z=5;
 
+const renderer=new THREE.WebGLRenderer();
+renderer.setSize(innerWidth,innerHeight);
+document.body.appendChild(renderer.domElement);
+
+/* STARS */
+const geo=new THREE.BufferGeometry();
+let v=[];
+for(let i=0;i<2000;i++){
+v.push((Math.random()-0.5)*50,(Math.random()-0.5)*50,(Math.random()-0.5)*50);
 }
+geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+
+const mat=new THREE.PointsMaterial({color:0x00ffff});
+const stars=new THREE.Points(geo,mat);
+scene.add(stars);
+
+/* CUBE */
+const cube=new THREE.Mesh(
+new THREE.BoxGeometry(),
+new THREE.MeshBasicMaterial({color:0x00ffff,wireframe:true})
+);
+scene.add(cube);
+
+/* CLICK */
+const ray=new THREE.Raycaster();
+const mouse=new THREE.Vector2();
+
+window.onclick=(e)=>{
+mouse.x=(e.clientX/innerWidth)*2-1;
+mouse.y=-(e.clientY/innerHeight)*2+1;
+
+ray.setFromCamera(mouse,camera);
+if(ray.intersectObject(cube).length>0){
+openPanel();
+jarvis("Panel opened");
+}
+};
+
+/* ANIMATE */
+function animate(){
+requestAnimationFrame(animate);
+cube.rotation.x+=0.01;
+cube.rotation.y+=0.01;
+stars.rotation.y+=0.0005;
+renderer.render(scene,camera);
+}
+animate();
 
 </script>
 
