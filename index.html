@@ -1,15 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pankaj Ultra Store</title>
+
+<style>
+
+/* 🌌 BACKGROUND */
+body{
+margin:0;
+background:black;
+color:#00ffff;
+font-family:monospace;
+overflow:hidden;
+}
+
+/* HEADER */
+header{
+text-align:center;
+padding:15px;
+font-size:20px;
+background:#000;
+box-shadow:0 0 20px #00ffff;
+}
+
+/* CANVAS */
+#stars{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* BUTTON */
+.btn{
+display:block;
+margin:15px auto;
+padding:15px;
+width:80%;
+text-align:center;
+background:#00ffff;
+color:black;
+border-radius:10px;
+font-weight:bold;
+box-shadow:0 0 20px #00ffff;
+}
+
+/* FINGERPRINT */
+#fingerprint{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 30px;
+border-radius:50px;
+background:#00ffff;
+color:black;
+box-shadow:0 0 20px #00ffff;
+animation:pulse 2s infinite;
+}
+@keyframes pulse{
+0%{box-shadow:0 0 10px #00ffff;}
+50%{box-shadow:0 0 30px #00ffff;}
+100%{box-shadow:0 0 10px #00ffff;}
+}
+
+/* 3D CUBE */
+.cube{
+width:100px;
+height:100px;
+margin:30px auto;
+transform-style:preserve-3d;
+animation:rotate 8s infinite linear;
+}
+.cube div{
+position:absolute;
+width:100px;
+height:100px;
+background:#00ffff;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+@keyframes rotate{
+0%{transform:rotateX(0) rotateY(0);}
+100%{transform:rotateX(360deg) rotateY(360deg);}
+}
+
+/* ADMIN PANEL */
+#adminPanel{
+display:none;
+position:fixed;
+top:20%;
+left:50%;
+transform:translateX(-50%);
+background:#000;
+padding:20px;
+box-shadow:0 0 30px #00ffff;
+z-index:999;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>PANKAJ 💀 ULTRA STORE</header>
+
+<canvas id="stars"></canvas>
+
+<div class="cube">
+<div>DT</div>
+<div>HTTP</div>
+<div>ADMIN</div>
+<div>LOGIN</div>
+</div>
+
+<div class="btn" onclick="buyNow()">💳 Buy Access</div>
+<div class="btn" onclick="openLogin('dt')">⬇ Download DT</div>
+<div class="btn" onclick="openLogin('http')">⬇ Download HTTP</div>
+<div class="btn" onclick="realLogin()">🔐 Login</div>
+
+<div id="fingerprint" onclick="unlockFP()">🔓 Fingerprint Unlock</div>
+
+<div id="adminPanel">
+<h3>💀 ADMIN</h3>
+<button onclick="genDT()">DT Password</button><br><br>
+<button onclick="genHTTP()">HTTP Password</button><br><br>
+<button onclick="clearAll()">Clear</button><br><br>
+<button onclick="this.parentElement.style.display='none'">Close</button>
+</div>
+
 <script>
 
-/* =========================
-   ⭐ STAR BACKGROUND
-========================= */
+/* ================== LOAD SAFE ================== */
+document.addEventListener("DOMContentLoaded",function(){
+
+/* ⭐ STAR BG */
 const canvas=document.getElementById("stars");
+if(canvas){
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let stars=[];
-for(let i=0;i<150;i++){
+for(let i=0;i<100;i++){
 stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
 }
 
@@ -18,59 +154,44 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="white";
 stars.forEach(s=>{
 ctx.fillRect(s.x,s.y,2,2);
-s.y+=0.5;
+s.y+=0.3;
 if(s.y>canvas.height) s.y=0;
 });
 requestAnimationFrame(draw);
 }
 draw();
-
-/* =========================
-   💀 3D CARD EFFECT
-========================= */
-function tilt(e,el){
-let x=(e.offsetX/el.clientWidth-0.5)*20;
-let y=(e.offsetY/el.clientHeight-0.5)*20;
-el.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
-}
-function reset(el){
-el.style.transform="rotateY(0) rotateX(0)";
 }
 
-/* =========================
-   💳 PAYMENT
-========================= */
-function buyNow(){
-window.location.href="upi://pay?pa=pankajratrey7@axl&pn=PankajStore&am=3&cu=INR";
+/* 💳 PAYMENT (SIMULATION SAFE) */
+window.buyNow=function(){
+alert("After payment, contact admin for password");
 }
 
-/* =========================
-   🔐 ONE-TIME PASSWORD SYSTEM
-========================= */
-let validPasswords={};
-
-function generatePassword(type){
+/* 🔐 PASSWORD SYSTEM */
+window.generatePassword=function(type){
 let pass=Math.random().toString(36).substring(2,8);
 localStorage.setItem("pass_"+type,pass);
-alert("Password for "+type+": "+pass);
+alert("Password: "+pass);
 }
 
-/* LOGIN */
-function openLogin(type){
+window.openLogin=function(type){
 
-let userPass=prompt("Enter Access Password");
+fakeLoad(()=>{
 
-let realPass=localStorage.getItem("pass_"+type);
+let p=prompt("Enter Password");
+let real=localStorage.getItem("pass_"+type);
 
-if(userPass===realPass){
+if(p===real){
 localStorage.removeItem("pass_"+type);
 download(type);
 }else{
-alert("❌ Invalid / Expired Password");
-}
+alert("Wrong / Expired");
 }
 
-/* DOWNLOAD */
+});
+
+}
+
 function download(type){
 if(type==="dt"){
 window.location.href="vpn_config.dt.dark";
@@ -80,79 +201,91 @@ window.location.href="http_injector.ehi.ehi";
 }
 }
 
-/* =========================
-   🕶️ HIDDEN ADMIN SYSTEM
-========================= */
+/* ⏳ LOADER */
+function fakeLoad(cb){
+let l=document.createElement("div");
+l.style.position="fixed";
+l.style.top=0;
+l.style.left=0;
+l.style.width="100%";
+l.style.height="100%";
+l.style.background="black";
+l.style.color="#00ffff";
+l.style.display="flex";
+l.style.alignItems="center";
+l.style.justifyContent="center";
+l.innerHTML="Connecting...";
+document.body.appendChild(l);
 
-let tapCount=0;
-
-document.querySelector("header").addEventListener("click",()=>{
-tapCount++;
-
-if(tapCount>=5){
-tapCount=0;
-openAdmin();
+setTimeout(()=>{
+l.remove();
+cb();
+},1200);
 }
+
+/* 🕶️ ADMIN */
+let tap=0;
+document.querySelector("header").onclick=()=>{
+tap++;
+if(tap>=5){
+tap=0;
+let p=prompt("Admin Password");
+if(p==="Shadow"){
+document.getElementById("adminPanel").style.display="block";
+}else alert("Wrong");
+}
+};
+
+window.genDT=function(){generatePassword("dt");}
+window.genHTTP=function(){generatePassword("http");}
+window.clearAll=function(){localStorage.clear();alert("Cleared");}
+
+/* 🔊 SOUND */
+document.addEventListener("click",()=>{
+try{
+new Audio("https://www.soundjay.com/button/sounds/button-16.mp3").play();
+}catch(e){}
 });
 
-/* ADMIN PASSWORD */
-function openAdmin(){
-let pass=prompt("Enter Admin Password");
-
-if(pass==="Shadow"){
-document.getElementById("adminPanel").style.display="block";
-}else{
-alert("❌ Wrong Password");
-}
-}
-
-/* =========================
-   🎛️ ADMIN PANEL ACTIONS
-========================= */
-
-function genDT(){
-generatePassword("dt");
-}
-
-function genHTTP(){
-generatePassword("http");
-}
-
-/* =========================
-   💀 EXTRA EFFECTS
-========================= */
-
-/* CLICK PARTICLE EXPLOSION */
+/* 💀 PARTICLES */
 document.addEventListener("click",(e)=>{
-for(let i=0;i<10;i++){
-let div=document.createElement("div");
-div.style.position="fixed";
-div.style.width="5px";
-div.style.height="5px";
-div.style.background="#00ffff";
-div.style.left=e.clientX+"px";
-div.style.top=e.clientY+"px";
-div.style.borderRadius="50%";
-document.body.appendChild(div);
+for(let i=0;i<6;i++){
+let d=document.createElement("div");
+d.style.position="fixed";
+d.style.width="4px";
+d.style.height="4px";
+d.style.background="#00ffff";
+d.style.left=e.clientX+"px";
+d.style.top=e.clientY+"px";
+document.body.appendChild(d);
 
-let x=(Math.random()-0.5)*100;
-let y=(Math.random()-0.5)*100;
+let x=(Math.random()-0.5)*80;
+let y=(Math.random()-0.5)*80;
 
-div.animate([
+d.animate([
 {transform:"translate(0,0)",opacity:1},
 {transform:`translate(${x}px,${y}px)`,opacity:0}
-],{duration:800});
+],{duration:600});
 
-setTimeout(()=>div.remove(),800);
+setTimeout(()=>d.remove(),600);
 }
 });
 
-/* SOUND EFFECT */
-function playSound(){
-let audio=new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
-audio.play();
+});
+
+/* 🔓 FINGERPRINT */
+function unlockFP(){
+alert("Access Granted");
 }
 
-document.addEventListener("click",playSound);
+/* 🔐 REAL LOGIN (ADD FIREBASE KEYS) */
+function realLogin(){
+let email=prompt("Email");
+let pass=prompt("Password");
+alert("Login system needs Firebase setup");
+}
 
 </script>
+
+</body>
+</html>
