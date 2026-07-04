@@ -1,215 +1,269 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj Hacker Store</title>
+<meta charset="UTF-8">
+<title>Reality OS Pro Max</title>
 
 <style>
 body{
-margin:0;
-background:black;
-font-family:monospace;
-color:#00ffff;
-overflow:hidden;
+  margin:0;
+  font-family:Arial;
+  color:white;
+  background:linear-gradient(#050505,#0a0a0a);
 }
 
-/* GLASS PANEL */
-.panel{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:rgba(0,255,255,0.08);
-backdrop-filter:blur(10px);
-padding:20px;
-border-radius:15px;
-box-shadow:0 0 30px cyan;
-width:90%;
-max-width:350px;
-text-align:center;
-}
-
-/* INPUT */
-input{
-width:90%;
-padding:10px;
-margin:10px;
-border:none;
-border-radius:8px;
-background:#111;
-color:cyan;
+/* NAV */
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  padding:15px;
+  background:#000000cc;
+  position:sticky;
+  top:0;
 }
 
 /* BUTTON */
 .btn{
-padding:10px 15px;
-border:1px solid cyan;
-background:transparent;
-color:cyan;
-border-radius:10px;
-margin:10px;
+  padding:10px 18px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(45deg,#00fff7,#7a00ff);
+  color:white;
+  cursor:pointer;
+}
+.btn:hover{ transform:scale(1.08); }
+
+/* SECTION */
+.section{ display:none; padding:20px; }
+.active{ display:block; }
+
+/* CHAT */
+.chat-box{
+  height:300px;
+  overflow:auto;
+  background:#111;
+  padding:10px;
+  border-radius:10px;
 }
 
-/* STORE */
+/* INPUT */
+input, textarea{
+  padding:10px;
+  margin:5px;
+  border:none;
+  border-radius:6px;
+  width:90%;
+}
+
+/* CARD */
 .card{
-background:rgba(0,0,0,0.8);
-padding:10px;
-margin:10px;
-border-radius:10px;
-box-shadow:0 0 10px cyan;
+  background:#111;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
 }
 
-img{
-width:100%;
-border-radius:10px;
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:20px;
+  opacity:0.6;
 }
 
-#store{
-display:none;
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-overflow:auto;
-padding-top:60px;
+/* CANVAS RAIN */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
-
-/* TOP BAR */
-#top{
-position:fixed;
-top:0;
-width:100%;
-background:rgba(0,255,255,0.1);
-text-align:center;
-padding:10px;
-}
-
-/* TYPE TEXT */
-#typing{
-margin-top:50px;
-text-align:center;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="panel">
-<h3>🔐 LOGIN</h3>
-<input id="user" placeholder="Username">
-<input id="pass" type="password" placeholder="Password">
-<button class="btn" onclick="login()">ENTER</button>
+<canvas id="rain"></canvas>
+
+<!-- NAV -->
+<div class="nav">
+<button class="btn" onclick="show('home')">Home</button>
+<button class="btn" onclick="show('ai')">AI Chat</button>
+<button class="btn" onclick="show('imageAI')">AI Image</button>
+<button class="btn" onclick="show('tools')">Tools</button>
+<button class="btn" onclick="show('love')">Love</button>
 </div>
 
-<!-- STORE -->
-<div id="store">
-<div id="top">💀 HACKER STORE</div>
+<!-- HOME -->
+<div id="home" class="section active">
+<h1>🌍 Reality OS</h1>
+<p id="welcome"></p>
+</div>
 
-<div id="typing">Welcome...</div>
+<!-- AI CHAT (CHATGPT STYLE STRUCTURE) -->
+<div id="ai" class="section">
+<h2>🤖 AI Assistant</h2>
+<div class="chat-box" id="chat"></div>
+<input id="msg" placeholder="Ask anything...">
+<button class="btn" onclick="send()">Send</button>
+</div>
+
+<!-- AI IMAGE SYSTEM -->
+<div id="imageAI" class="section">
+<h2>🎨 AI Image Editor + Generator</h2>
+
+<textarea id="prompt" placeholder="Describe image (e.g. Ghibli rain village)..."></textarea>
+
+<input type="file" id="upload">
+
+<button class="btn" onclick="generate()">Generate Image</button>
+<button class="btn" onclick="edit()">Edit Image</button>
+
+<p id="status"></p>
+<img id="output" width="300">
+</div>
+
+<!-- TOOLS -->
+<div id="tools" class="section">
+<h2>⚙️ Smart Tools</h2>
 
 <div class="card">
-<img src="https://picsum.photos/300/150?1">
-<h4>Dark Tunnel Config</h4>
-<button class="btn" onclick="selectFile('dark')">Select</button>
+<button class="btn" onclick="travel()">Travel Suggestion</button>
+<p id="travel"></p>
 </div>
 
 <div class="card">
-<img src="https://picsum.photos/300/150?2">
-<h4>HTTP Injector Config</h4>
-<button class="btn" onclick="selectFile('http')">Select</button>
+<button class="btn" onclick="idea()">AI Idea Generator</button>
+<p id="idea"></p>
 </div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- LOVE -->
+<div id="love" class="section">
+<h2>❤️ Love Calculator</h2>
+<input id="n1" placeholder="Your name">
+<input id="n2" placeholder="Partner name">
+<button class="btn" onclick="love()">Check</button>
+<p id="result"></p>
+</div>
+
+<div class="footer">Developed by Pankaj Ratrey</div>
 
 <script>
 
-/* LOGIN */
-function login(){
-if(user.value==="pankaj" && pass.value==="9301101554"){
-login.style.display="none";
-store.style.display="block";
-type("Access Granted. Welcome.");
-}else{
-alert("Wrong");
-}
+/* NAV */
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-/* TYPE */
-function type(text){
-let i=0;
-typing.innerText="";
-let t=setInterval(()=>{
-typing.innerText+=text[i];
-i++;
-if(i>=text.length) clearInterval(t);
-},40);
+/* USER */
+let user=localStorage.getItem("user")||prompt("Enter your name");
+localStorage.setItem("user",user);
+document.getElementById("welcome").innerText="Welcome "+user+" 😎";
+
+/* AI CHAT (STRUCTURE LIKE CHATGPT) */
+function send(){
+  let msg=document.getElementById("msg").value.trim();
+  if(!msg) return;
+
+  let chat=document.getElementById("chat");
+  chat.innerHTML+=`<p>👤 ${msg}</p>`;
+
+  let reply=aiReply(msg);
+
+  setTimeout(()=>{
+    chat.innerHTML+=`<p>🤖 ${reply}</p>`;
+    chat.scrollTop=chat.scrollHeight;
+  },400);
+
+  document.getElementById("msg").value="";
 }
 
-/* SELECT FILE */
-function selectFile(type){
-type("Choose Network");
+function aiReply(msg){
+  msg=msg.toLowerCase();
 
-store.innerHTML=`
-<div id="top">Select Network</div>
+  if(msg.includes("hello")) return "Hello bro 😎";
+  if(msg.includes("image")) return "Go to AI Image section to generate";
+  if(msg.includes("idea")) return "Use idea generator in tools 🚀";
 
-<div class="panel">
-<button class="btn" onclick="net('${type}','Jio')">Jio</button>
-<button class="btn" onclick="net('${type}','Airtel')">Airtel</button>
-<button class="btn" onclick="net('${type}','Vi')">Vi</button>
-<button class="btn" onclick="net('${type}','BSNL')">BSNL</button>
-</div>
-`;
+  return "I am AI system (upgrade API for real ChatGPT)";
 }
 
-/* NETWORK */
-function net(file,sim){
-store.innerHTML=`
-<div id="top">${sim} Network</div>
+/* AI IMAGE */
+function generate(){
+  let p=document.getElementById("prompt").value;
+  if(!p) return alert("Enter prompt");
 
-<div class="panel">
-<button class="btn" onclick="download('${file}','${sim}','4G')">4G</button>
-<button class="btn" onclick="download('${file}','${sim}','5G')">5G</button>
-</div>
-`;
+  document.getElementById("status").innerText="Generating...";
+
+  document.getElementById("output").src=
+  "https://picsum.photos/400?random="+Math.random();
+
+  document.getElementById("status").innerText="Generated ✅";
 }
 
-/* DOWNLOAD */
-function download(file,sim,net){
-alert("Downloading "+file+" "+sim+" "+net);
+function edit(){
+  let file=document.getElementById("upload").files[0];
+  if(!file) return alert("Upload image");
+
+  let url=URL.createObjectURL(file);
+  document.getElementById("output").src=url;
+  document.getElementById("status").innerText="Edited (preview) ✅";
 }
 
-/* 3D BACKGROUND */
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-camera.position.z=5;
-
-const renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(innerWidth,innerHeight);
-document.body.appendChild(renderer.domElement);
-
-/* PARTICLES */
-const geo=new THREE.BufferGeometry();
-let v=[];
-for(let i=0;i<1000;i++){
-v.push((Math.random()-0.5)*30,(Math.random()-0.5)*30,(Math.random()-0.5)*30);
+/* TOOLS */
+function travel(){
+  let arr=["Manali Rain 🌧️","Ladakh 🏔️","Goa 🌃","Shimla 🌫️"];
+  document.getElementById("travel").innerText=
+  arr[Math.floor(Math.random()*arr.length)];
 }
-geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
 
-const stars=new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffff}));
-scene.add(stars);
-
-/* ANIMATION */
-function animate(){
-requestAnimationFrame(animate);
-stars.rotation.y+=0.001;
-renderer.render(scene,camera);
+function idea(){
+  let arr=[
+    "Start travel vlog 🌍",
+    "Create AI tool 🤖",
+    "Make gaming channel 🎮",
+    "Sell presets 🎨"
+  ];
+  document.getElementById("idea").innerText=
+  arr[Math.floor(Math.random()*arr.length)];
 }
-animate();
+
+/* LOVE */
+function love(){
+  let a=document.getElementById("n1").value;
+  let b=document.getElementById("n2").value;
+  if(!a||!b) return alert("Enter names");
+
+  let score=(a.length*b.length*7)%101;
+  document.getElementById("result").innerText="❤️ "+score+"%";
+}
+
+/* RAIN EFFECT */
+let c=document.getElementById("rain");
+let ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+let rain=[];
+for(let i=0;i<150;i++){
+  rain.push({x:Math.random()*c.width,y:Math.random()*c.height});
+}
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.2)";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle="#00fff7";
+  rain.forEach(r=>{
+    ctx.fillRect(r.x,r.y,2,10);
+    r.y+=7;
+    if(r.y>c.height) r.y=0;
+  });
+}
+setInterval(draw,30);
 
 </script>
 
