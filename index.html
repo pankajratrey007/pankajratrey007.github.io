@@ -1,269 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Reality OS Pro Max</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pankaj AI Ultra</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
+  font-family:sans-serif;
+  background:black;
   color:white;
-  background:linear-gradient(#050505,#0a0a0a);
+  overflow:hidden;
 }
 
-/* NAV */
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  padding:15px;
-  background:#000000cc;
-  position:sticky;
-  top:0;
+/* 🌌 BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle,#111,#000);
+  animation:bg 12s infinite alternate;
+}
+@keyframes bg{
+  from{transform:translate(0,0)}
+  to{transform:translate(-120px,-120px)}
 }
 
-/* BUTTON */
-.btn{
-  padding:10px 18px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(45deg,#00fff7,#7a00ff);
-  color:white;
-  cursor:pointer;
-}
-.btn:hover{ transform:scale(1.08); }
+/* UI */
+.container{padding:15px; position:relative; z-index:2;}
 
-/* SECTION */
-.section{ display:none; padding:20px; }
-.active{ display:block; }
-
-/* CHAT */
-.chat-box{
-  height:300px;
+.chat{
+  height:320px;
   overflow:auto;
   background:#111;
+  border-radius:12px;
   padding:10px;
-  border-radius:10px;
+  font-size:14px;
 }
 
-/* INPUT */
-input, textarea{
-  padding:10px;
-  margin:5px;
+button{
+  padding:12px;
+  margin:4px;
   border:none;
-  border-radius:6px;
-  width:90%;
+  border-radius:12px;
+  background:#222;
+  color:white;
+  font-size:14px;
 }
 
-/* CARD */
-.card{
-  background:#111;
-  padding:15px;
-  margin:10px 0;
+button:hover{background:#444;}
+
+input{
+  padding:10px;
+  width:60%;
+  border:none;
   border-radius:10px;
 }
 
-/* FOOTER */
-.footer{
-  text-align:center;
-  padding:20px;
-  opacity:0.6;
+/* 👁️ EYE */
+.eye{
+  position:absolute;
+  width:60px;
+  top:18%;
+  left:42%;
+  animation:blink 3s infinite;
+}
+@keyframes blink{
+  0%,90%,100%{opacity:1}
+  95%{opacity:0}
 }
 
-/* CANVAS RAIN */
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
+/* 💀 GLITCH */
+.glitch{animation:glitch 0.15s infinite;}
+@keyframes glitch{
+  0%{transform:translate(2px)}
+  50%{transform:translate(-2px)}
 }
+
+img{max-width:100%; border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<canvas id="rain"></canvas>
+<img src="https://i.ibb.co/4f7Yz0Y/eye.png" class="eye">
 
-<!-- NAV -->
-<div class="nav">
-<button class="btn" onclick="show('home')">Home</button>
-<button class="btn" onclick="show('ai')">AI Chat</button>
-<button class="btn" onclick="show('imageAI')">AI Image</button>
-<button class="btn" onclick="show('tools')">Tools</button>
-<button class="btn" onclick="show('love')">Love</button>
-</div>
+<div class="container">
 
-<!-- HOME -->
-<div id="home" class="section active">
-<h1>🌍 Reality OS</h1>
-<p id="welcome"></p>
-</div>
+<h2>Developed by Pankaj Ratrey</h2>
 
-<!-- AI CHAT (CHATGPT STYLE STRUCTURE) -->
-<div id="ai" class="section">
-<h2>🤖 AI Assistant</h2>
-<div class="chat-box" id="chat"></div>
-<input id="msg" placeholder="Ask anything...">
-<button class="btn" onclick="send()">Send</button>
-</div>
+<div id="chat" class="chat"></div>
 
-<!-- AI IMAGE SYSTEM -->
-<div id="imageAI" class="section">
-<h2>🎨 AI Image Editor + Generator</h2>
+<input id="msg" placeholder="Type message...">
+<button onclick="send()">Send</button>
+<button onclick="voice()">🎤</button>
 
-<textarea id="prompt" placeholder="Describe image (e.g. Ghibli rain village)..."></textarea>
+<br>
 
-<input type="file" id="upload">
+<button onclick="img()">🎨 Image</button>
+<button onclick="theme()">🌙 Theme</button>
+<button onclick="horror()">💀 Horror</button>
+<button onclick="mode()">🧠 Mode</button>
 
-<button class="btn" onclick="generate()">Generate Image</button>
-<button class="btn" onclick="edit()">Edit Image</button>
-
-<p id="status"></p>
-<img id="output" width="300">
-</div>
-
-<!-- TOOLS -->
-<div id="tools" class="section">
-<h2>⚙️ Smart Tools</h2>
-
-<div class="card">
-<button class="btn" onclick="travel()">Travel Suggestion</button>
-<p id="travel"></p>
-</div>
-
-<div class="card">
-<button class="btn" onclick="idea()">AI Idea Generator</button>
-<p id="idea"></p>
-</div>
+<div id="image"></div>
 
 </div>
-
-<!-- LOVE -->
-<div id="love" class="section">
-<h2>❤️ Love Calculator</h2>
-<input id="n1" placeholder="Your name">
-<input id="n2" placeholder="Partner name">
-<button class="btn" onclick="love()">Check</button>
-<p id="result"></p>
-</div>
-
-<div class="footer">Developed by Pankaj Ratrey</div>
 
 <script>
 
-/* NAV */
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+const chat = document.getElementById("chat");
+let aiMode = "normal";
+
+/* 💬 ADD */
+function add(t){
+  chat.innerHTML += "<p>"+t+"</p>";
+  chat.scrollTop = chat.scrollHeight;
 }
 
-/* USER */
-let user=localStorage.getItem("user")||prompt("Enter your name");
-localStorage.setItem("user",user);
-document.getElementById("welcome").innerText="Welcome "+user+" 😎";
+/* 🧠 HUMAN STYLE RESPONSES */
+const greetings = [
+ "Hey 👋","Hi 😊","Hello there!","Hii bro 😄","Hey what's up!"
+];
 
-/* AI CHAT (STRUCTURE LIKE CHATGPT) */
+const howareyou = [
+ "I'm good! How about you?",
+ "Doing great 😎 what about you?",
+ "All good here 👍 you?",
+ "Feeling awesome today 🔥"
+];
+
+const casual = [
+ "Nice 👍",
+ "That's cool 😄",
+ "Ohhh interesting 🤔",
+ "Tell me more 👀",
+ "Haha 😂 that's funny",
+ "I like that 😎"
+];
+
+const motivation = [
+ "🔥 You can do anything!",
+ "Never give up 💪",
+ "You're strong bro!",
+ "Keep pushing forward 🚀"
+];
+
+const horrorText = [
+ "👁️ I can see you...",
+ "Don't turn around...",
+ "Something is behind you...",
+ "You are not alone..."
+];
+
+/* 🧠 AI ENGINE */
+function ai(text){
+
+ text = text.toLowerCase();
+
+ if(aiMode=="horror"){
+   return random(horrorText);
+ }
+
+ if(aiMode=="motivation"){
+   return random(motivation);
+ }
+
+ if(text.includes("hi")||text.includes("hello"))
+   return random(greetings);
+
+ if(text.includes("how are you"))
+   return random(howareyou);
+
+ if(text.includes("good")||text.includes("nice"))
+   return random(casual);
+
+ if(text.includes("sad"))
+   return "I'm here for you ❤️";
+
+ if(text.includes("love"))
+   return "Love makes everything better ❤️";
+
+ return random(casual);
+}
+
+/* 🎲 RANDOM */
+function random(arr){
+ return arr[Math.floor(Math.random()*arr.length)];
+}
+
+/* 💬 SEND */
 function send(){
-  let msg=document.getElementById("msg").value.trim();
-  if(!msg) return;
+ let m = msg.value;
+ add("You: "+m);
 
-  let chat=document.getElementById("chat");
-  chat.innerHTML+=`<p>👤 ${msg}</p>`;
+ add("AI: typing...");
+ setTimeout(()=>{
+   let r = ai(m);
+   chat.lastChild.innerHTML = "AI: "+r;
+   speak(r);
+ },800);
 
-  let reply=aiReply(msg);
-
-  setTimeout(()=>{
-    chat.innerHTML+=`<p>🤖 ${reply}</p>`;
-    chat.scrollTop=chat.scrollHeight;
-  },400);
-
-  document.getElementById("msg").value="";
+ msg.value="";
 }
 
-function aiReply(msg){
-  msg=msg.toLowerCase();
-
-  if(msg.includes("hello")) return "Hello bro 😎";
-  if(msg.includes("image")) return "Go to AI Image section to generate";
-  if(msg.includes("idea")) return "Use idea generator in tools 🚀";
-
-  return "I am AI system (upgrade API for real ChatGPT)";
+/* 🎤 VOICE */
+function voice(){
+ let r = new webkitSpeechRecognition();
+ r.onresult = e=>{
+   msg.value = e.results[0][0].transcript;
+ };
+ r.start();
 }
 
-/* AI IMAGE */
-function generate(){
-  let p=document.getElementById("prompt").value;
-  if(!p) return alert("Enter prompt");
-
-  document.getElementById("status").innerText="Generating...";
-
-  document.getElementById("output").src=
-  "https://picsum.photos/400?random="+Math.random();
-
-  document.getElementById("status").innerText="Generated ✅";
+/* 🔊 SPEAK */
+function speak(t){
+ speechSynthesis.speak(new SpeechSynthesisUtterance(t));
 }
 
-function edit(){
-  let file=document.getElementById("upload").files[0];
-  if(!file) return alert("Upload image");
-
-  let url=URL.createObjectURL(file);
-  document.getElementById("output").src=url;
-  document.getElementById("status").innerText="Edited (preview) ✅";
+/* 🎨 IMAGE */
+function img(){
+ let p = prompt("Enter image idea");
+ image.innerHTML =
+ `<img src="https://source.unsplash.com/400x300/?${p},anime">`;
 }
 
-/* TOOLS */
-function travel(){
-  let arr=["Manali Rain 🌧️","Ladakh 🏔️","Goa 🌃","Shimla 🌫️"];
-  document.getElementById("travel").innerText=
-  arr[Math.floor(Math.random()*arr.length)];
+/* 🌙 THEME */
+function theme(){
+ document.body.style.background =
+ document.body.style.background=="white"?"black":"white";
 }
 
-function idea(){
-  let arr=[
-    "Start travel vlog 🌍",
-    "Create AI tool 🤖",
-    "Make gaming channel 🎮",
-    "Sell presets 🎨"
-  ];
-  document.getElementById("idea").innerText=
-  arr[Math.floor(Math.random()*arr.length)];
+/* 💀 HORROR */
+function horror(){
+ document.body.classList.toggle("glitch");
+ add("⚠️ Something changed...");
 }
 
-/* LOVE */
-function love(){
-  let a=document.getElementById("n1").value;
-  let b=document.getElementById("n2").value;
-  if(!a||!b) return alert("Enter names");
+/* 🧠 MODE */
+function mode(){
+ if(aiMode=="normal") aiMode="motivation";
+ else if(aiMode=="motivation") aiMode="horror";
+ else aiMode="normal";
 
-  let score=(a.length*b.length*7)%101;
-  document.getElementById("result").innerText="❤️ "+score+"%";
+ add("Mode: "+aiMode);
 }
 
-/* RAIN EFFECT */
-let c=document.getElementById("rain");
-let ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
+/* 💾 MEMORY */
+onload=()=>{ if(localStorage.chat) chat.innerHTML=localStorage.chat; }
+onbeforeunload=()=>{ localStorage.chat=chat.innerHTML; }
 
-let rain=[];
-for(let i=0;i<150;i++){
-  rain.push({x:Math.random()*c.width,y:Math.random()*c.height});
-}
+/* 🎬 INTRO */
+setTimeout(()=> add("👋 Welcome back bro!"),1000);
 
-function draw(){
-  ctx.fillStyle="rgba(0,0,0,0.2)";
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.fillStyle="#00fff7";
-  rain.forEach(r=>{
-    ctx.fillRect(r.x,r.y,2,10);
-    r.y+=7;
-    if(r.y>c.height) r.y=0;
-  });
-}
-setInterval(draw,30);
+/* 💀 RANDOM EVENT */
+setInterval(()=>{
+ if(Math.random()<0.08){
+   add("👁️ ...");
+ }
+},10000);
 
 </script>
 
