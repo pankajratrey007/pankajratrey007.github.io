@@ -8,70 +8,148 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#0b1120;
+  background:linear-gradient(135deg,#020617,#0f172a);
   color:white;
 }
 
+/* NAV */
 .nav{
   display:flex;
   justify-content:space-between;
-  padding:15px;
+  padding:15px 30px;
   background:#020617;
+  position:sticky;
+  top:0;
+}
+.nav a{
+  color:#cbd5f5;
+  text-decoration:none;
+  margin-left:15px;
 }
 
+/* HERO */
 .hero{
-  height:70vh;
+  height:80vh;
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
+  text-align:center;
+}
+.hero h1{
+  font-size:42px;
 }
 
+/* BUTTON */
 .btn{
-  padding:12px 20px;
-  background:#6366f1;
+  padding:14px 25px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
   border:none;
-  border-radius:8px;
   color:white;
   cursor:pointer;
+  transition:0.3s;
+}
+.btn:hover{
+  transform:scale(1.1);
 }
 
+/* SECTION */
 .section{
-  padding:40px;
+  padding:60px 20px;
   text-align:center;
 }
 
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  margin-top:20px;
+}
+
+/* CARD */
+.card{
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  cursor:pointer;
+  transition:0.3s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 20px #6366f1;
+}
+
+/* DRIVE */
 iframe{
   width:100%;
-  height:500px;
+  height:520px;
   border:none;
-  border-radius:10px;
+  border-radius:15px;
+  margin-top:20px;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <div class="nav">
   <div>Study Hub</div>
+  <div>
+    <a href="#trades">Trades</a>
+    <a href="#materials">Materials</a>
+  </div>
 </div>
 
+<!-- HERO -->
 <section class="hero">
   <h1>ITI Study Materials</h1>
-  <button class="btn" onclick="go()">Open Materials</button>
+  <p>All content in one place</p>
+  <button class="btn" onclick="go('materials')">Explore</button>
 </section>
 
-<section class="section" id="drive">
-  <h2>All Study Material (Live)</h2>
+<!-- TRADES -->
+<section id="trades" class="section">
+  <h2>Trades</h2>
 
-  <!-- REAL DRIVE EMBED -->
+  <div class="grid">
+    <div class="card" onclick="go('materials')">⚡ Electrician</div>
+    <div class="card" onclick="go('materials')">🔧 Fitter</div>
+    <div class="card" onclick="go('materials')">💻 COPA</div>
+    <div class="card" onclick="go('materials')">🔥 Welder</div>
+    <div class="card" onclick="go('materials')">🚜 Diesel</div>
+    <div class="card" onclick="go('materials')">⚙️ Turner</div>
+  </div>
+
+</section>
+
+<!-- MATERIALS -->
+<section id="materials" class="section">
+  <h2>All Study Material</h2>
+
+  <!-- REAL DRIVE -->
   <iframe src="https://drive.google.com/embeddedfolderview?id=0B8lxEfA7LFv6NWsyWXlvZjFxbU0#grid"></iframe>
 
 </section>
 
+<!-- FOOTER -->
+<div class="footer">
+  © Study Hub
+</div>
+
 <script>
-function go(){
-  document.getElementById("drive").scrollIntoView({behavior:"smooth"});
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 </script>
 
