@@ -1,265 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pankaj AI Ultra</title>
+<meta charset="UTF-8">
+<title>Global Study Hub</title>
 
 <style>
-body{
+body {
   margin:0;
-  font-family:sans-serif;
-  background:black;
+  font-family:Arial;
+  background: linear-gradient(135deg,#020617,#0f172a);
   color:white;
-  overflow:hidden;
 }
 
-/* 🌌 BACKGROUND */
-body::before{
-  content:"";
-  position:fixed;
-  width:200%;
-  height:200%;
-  background:radial-gradient(circle,#111,#000);
-  animation:bg 12s infinite alternate;
-}
-@keyframes bg{
-  from{transform:translate(0,0)}
-  to{transform:translate(-120px,-120px)}
+/* NAV */
+.nav {
+  display:flex;
+  justify-content:space-between;
+  padding:15px 30px;
+  background:#020617;
+  position:sticky;
+  top:0;
 }
 
-/* UI */
-.container{padding:15px; position:relative; z-index:2;}
-
-.chat{
-  height:320px;
-  overflow:auto;
-  background:#111;
-  border-radius:12px;
-  padding:10px;
-  font-size:14px;
-}
-
-button{
-  padding:12px;
-  margin:4px;
-  border:none;
-  border-radius:12px;
-  background:#222;
+.nav a {
   color:white;
-  font-size:14px;
+  text-decoration:none;
+  margin:0 10px;
 }
 
-button:hover{background:#444;}
+/* HERO */
+.hero {
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
 
-input{
-  padding:10px;
-  width:60%;
+.hero h1 {
+  font-size:50px;
+}
+
+/* BUTTON */
+.btn {
+  padding:12px 25px;
   border:none;
   border-radius:10px;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  color:white;
+  cursor:pointer;
 }
 
-/* 👁️ EYE */
-.eye{
-  position:absolute;
-  width:60px;
-  top:18%;
-  left:42%;
-  animation:blink 3s infinite;
-}
-@keyframes blink{
-  0%,90%,100%{opacity:1}
-  95%{opacity:0}
+.btn:hover {
+  transform:scale(1.1);
+  box-shadow:0 0 20px #22d3ee;
 }
 
-/* 💀 GLITCH */
-.glitch{animation:glitch 0.15s infinite;}
-@keyframes glitch{
-  0%{transform:translate(2px)}
-  50%{transform:translate(-2px)}
+/* SECTION */
+.section {
+  padding:50px;
+  text-align:center;
 }
 
-img{max-width:100%; border-radius:10px;}
+/* CARDS */
+.cards {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+
+.card {
+  padding:20px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+}
+
+.card:hover {
+  transform:translateY(-10px);
+  box-shadow:0 0 20px #6366f1;
+}
+
+/* LINKS */
+.link-btn {
+  display:block;
+  margin:10px auto;
+  padding:15px;
+  width:280px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#f43f5e,#ec4899);
+  color:white;
+  text-decoration:none;
+}
+
+.link-btn:hover {
+  transform:scale(1.1);
+}
 </style>
+
 </head>
 
 <body>
 
-<img src="https://i.ibb.co/4f7Yz0Y/eye.png" class="eye">
-
-<div class="container">
-
-<h2>Developed by Pankaj Ratrey</h2>
-
-<div id="chat" class="chat"></div>
-
-<input id="msg" placeholder="Type message...">
-<button onclick="send()">Send</button>
-<button onclick="voice()">🎤</button>
-
-<br>
-
-<button onclick="img()">🎨 Image</button>
-<button onclick="theme()">🌙 Theme</button>
-<button onclick="horror()">💀 Horror</button>
-<button onclick="mode()">🧠 Mode</button>
-
-<div id="image"></div>
-
+<!-- NAV -->
+<div class="nav">
+  <h2>Global Hub</h2>
+  <div>
+    <a href="#trade">Trades</a>
+    <a href="#pdf">PDF</a>
+    <a href="#drive">Drive</a>
+    <a href="#contact">Contact</a>
+  </div>
 </div>
 
+<!-- HERO -->
+<section class="hero">
+  <h1>ITI Study Platform</h1>
+  <p>Download Notes, Papers & Study Materials</p>
+  <button class="btn" onclick="go('drive')">Start</button>
+</section>
+
+<!-- TRADES -->
+<section id="trade" class="section">
+  <h2>ITI Trades</h2>
+  <div class="cards">
+    <div class="card">Fitter</div>
+    <div class="card">Electrician</div>
+    <div class="card">COPA</div>
+    <div class="card">Welder</div>
+    <div class="card">Mechanic Diesel</div>
+    <div class="card">Turner</div>
+  </div>
+</section>
+
+<!-- PDF DOWNLOAD -->
+<section id="pdf" class="section">
+  <h2>PDF Download</h2>
+
+  <a href="https://cdn.globaliti.org/wp-content/uploads/2021/02/ED-ITI-1st-Year-All-Trade-Super-6-Class-01020304.pdf" target="_blank" class="link-btn">
+    📘 Engineering Drawing PDF
+  </a>
+
+  <a href="https://cdn.globaliti.org/wp-content/uploads/2020/03/7-Diversity-and-Inclusion.pdf" target="_blank" class="link-btn">
+    📘 Employability Skills PDF
+  </a>
+
+</section>
+
+<!-- DRIVE LINKS -->
+<section id="drive" class="section">
+  <h2>Drive Study Material</h2>
+
+  <a href="https://drive.google.com/drive/folders/0B8lxEfA7LFv6NWsyWXlvZjFxbU0" target="_blank" class="link-btn">
+    📂 Full ITI Drive Folder
+  </a>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <h2>Contact</h2>
+  <p>📍 Hathora, Ghazipur, India</p>
+  <p>📞 +91 7376831522</p>
+  <p>📧 info@globaliti.org</p>
+</section>
+
 <script>
-
-const chat = document.getElementById("chat");
-let aiMode = "normal";
-
-/* 💬 ADD */
-function add(t){
-  chat.innerHTML += "<p>"+t+"</p>";
-  chat.scrollTop = chat.scrollHeight;
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
-
-/* 🧠 HUMAN STYLE RESPONSES */
-const greetings = [
- "Hey 👋","Hi 😊","Hello there!","Hii bro 😄","Hey what's up!"
-];
-
-const howareyou = [
- "I'm good! How about you?",
- "Doing great 😎 what about you?",
- "All good here 👍 you?",
- "Feeling awesome today 🔥"
-];
-
-const casual = [
- "Nice 👍",
- "That's cool 😄",
- "Ohhh interesting 🤔",
- "Tell me more 👀",
- "Haha 😂 that's funny",
- "I like that 😎"
-];
-
-const motivation = [
- "🔥 You can do anything!",
- "Never give up 💪",
- "You're strong bro!",
- "Keep pushing forward 🚀"
-];
-
-const horrorText = [
- "👁️ I can see you...",
- "Don't turn around...",
- "Something is behind you...",
- "You are not alone..."
-];
-
-/* 🧠 AI ENGINE */
-function ai(text){
-
- text = text.toLowerCase();
-
- if(aiMode=="horror"){
-   return random(horrorText);
- }
-
- if(aiMode=="motivation"){
-   return random(motivation);
- }
-
- if(text.includes("hi")||text.includes("hello"))
-   return random(greetings);
-
- if(text.includes("how are you"))
-   return random(howareyou);
-
- if(text.includes("good")||text.includes("nice"))
-   return random(casual);
-
- if(text.includes("sad"))
-   return "I'm here for you ❤️";
-
- if(text.includes("love"))
-   return "Love makes everything better ❤️";
-
- return random(casual);
-}
-
-/* 🎲 RANDOM */
-function random(arr){
- return arr[Math.floor(Math.random()*arr.length)];
-}
-
-/* 💬 SEND */
-function send(){
- let m = msg.value;
- add("You: "+m);
-
- add("AI: typing...");
- setTimeout(()=>{
-   let r = ai(m);
-   chat.lastChild.innerHTML = "AI: "+r;
-   speak(r);
- },800);
-
- msg.value="";
-}
-
-/* 🎤 VOICE */
-function voice(){
- let r = new webkitSpeechRecognition();
- r.onresult = e=>{
-   msg.value = e.results[0][0].transcript;
- };
- r.start();
-}
-
-/* 🔊 SPEAK */
-function speak(t){
- speechSynthesis.speak(new SpeechSynthesisUtterance(t));
-}
-
-/* 🎨 IMAGE */
-function img(){
- let p = prompt("Enter image idea");
- image.innerHTML =
- `<img src="https://source.unsplash.com/400x300/?${p},anime">`;
-}
-
-/* 🌙 THEME */
-function theme(){
- document.body.style.background =
- document.body.style.background=="white"?"black":"white";
-}
-
-/* 💀 HORROR */
-function horror(){
- document.body.classList.toggle("glitch");
- add("⚠️ Something changed...");
-}
-
-/* 🧠 MODE */
-function mode(){
- if(aiMode=="normal") aiMode="motivation";
- else if(aiMode=="motivation") aiMode="horror";
- else aiMode="normal";
-
- add("Mode: "+aiMode);
-}
-
-/* 💾 MEMORY */
-onload=()=>{ if(localStorage.chat) chat.innerHTML=localStorage.chat; }
-onbeforeunload=()=>{ localStorage.chat=chat.innerHTML; }
-
-/* 🎬 INTRO */
-setTimeout(()=> add("👋 Welcome back bro!"),1000);
-
-/* 💀 RANDOM EVENT */
-setInterval(()=>{
- if(Math.random()<0.08){
-   add("👁️ ...");
- }
-},10000);
-
 </script>
 
 </body>
