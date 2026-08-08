@@ -2,174 +2,76 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Global Study Hub</title>
+<title>Study Hub</title>
 
 <style>
-body {
+body{
   margin:0;
   font-family:Arial;
-  background: linear-gradient(135deg,#020617,#0f172a);
+  background:#0b1120;
   color:white;
 }
 
-/* NAV */
-.nav {
+.nav{
   display:flex;
   justify-content:space-between;
-  padding:15px 30px;
+  padding:15px;
   background:#020617;
-  position:sticky;
-  top:0;
 }
 
-.nav a {
-  color:white;
-  text-decoration:none;
-  margin:0 10px;
-}
-
-/* HERO */
-.hero {
-  height:100vh;
+.hero{
+  height:70vh;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  text-align:center;
 }
 
-.hero h1 {
-  font-size:50px;
-}
-
-/* BUTTON */
-.btn {
-  padding:12px 25px;
+.btn{
+  padding:12px 20px;
+  background:#6366f1;
   border:none;
-  border-radius:10px;
-  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  border-radius:8px;
   color:white;
   cursor:pointer;
 }
 
-.btn:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px #22d3ee;
-}
-
-/* SECTION */
-.section {
-  padding:50px;
+.section{
+  padding:40px;
   text-align:center;
 }
 
-/* CARDS */
-.cards {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
-}
-
-.card {
-  padding:20px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);
-}
-
-.card:hover {
-  transform:translateY(-10px);
-  box-shadow:0 0 20px #6366f1;
-}
-
-/* LINKS */
-.link-btn {
-  display:block;
-  margin:10px auto;
-  padding:15px;
-  width:280px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#f43f5e,#ec4899);
-  color:white;
-  text-decoration:none;
-}
-
-.link-btn:hover {
-  transform:scale(1.1);
+iframe{
+  width:100%;
+  height:500px;
+  border:none;
+  border-radius:10px;
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="nav">
-  <h2>Global Hub</h2>
-  <div>
-    <a href="#trade">Trades</a>
-    <a href="#pdf">PDF</a>
-    <a href="#drive">Drive</a>
-    <a href="#contact">Contact</a>
-  </div>
+  <div>Study Hub</div>
 </div>
 
-<!-- HERO -->
 <section class="hero">
-  <h1>ITI Study Platform</h1>
-  <p>Download Notes, Papers & Study Materials</p>
-  <button class="btn" onclick="go('drive')">Start</button>
+  <h1>ITI Study Materials</h1>
+  <button class="btn" onclick="go()">Open Materials</button>
 </section>
 
-<!-- TRADES -->
-<section id="trade" class="section">
-  <h2>ITI Trades</h2>
-  <div class="cards">
-    <div class="card">Fitter</div>
-    <div class="card">Electrician</div>
-    <div class="card">COPA</div>
-    <div class="card">Welder</div>
-    <div class="card">Mechanic Diesel</div>
-    <div class="card">Turner</div>
-  </div>
-</section>
+<section class="section" id="drive">
+  <h2>All Study Material (Live)</h2>
 
-<!-- PDF DOWNLOAD -->
-<section id="pdf" class="section">
-  <h2>PDF Download</h2>
+  <!-- REAL DRIVE EMBED -->
+  <iframe src="https://drive.google.com/embeddedfolderview?id=0B8lxEfA7LFv6NWsyWXlvZjFxbU0#grid"></iframe>
 
-  <a href="https://cdn.globaliti.org/wp-content/uploads/2021/02/ED-ITI-1st-Year-All-Trade-Super-6-Class-01020304.pdf" target="_blank" class="link-btn">
-    📘 Engineering Drawing PDF
-  </a>
-
-  <a href="https://cdn.globaliti.org/wp-content/uploads/2020/03/7-Diversity-and-Inclusion.pdf" target="_blank" class="link-btn">
-    📘 Employability Skills PDF
-  </a>
-
-</section>
-
-<!-- DRIVE LINKS -->
-<section id="drive" class="section">
-  <h2>Drive Study Material</h2>
-
-  <a href="https://drive.google.com/drive/folders/0B8lxEfA7LFv6NWsyWXlvZjFxbU0" target="_blank" class="link-btn">
-    📂 Full ITI Drive Folder
-  </a>
-
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <h2>Contact</h2>
-  <p>📍 Hathora, Ghazipur, India</p>
-  <p>📞 +91 7376831522</p>
-  <p>📧 info@globaliti.org</p>
 </section>
 
 <script>
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+function go(){
+  document.getElementById("drive").scrollIntoView({behavior:"smooth"});
 }
 </script>
 
